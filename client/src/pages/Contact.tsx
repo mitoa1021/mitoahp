@@ -22,15 +22,34 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    alert("お問い合わせありがとうございます。確認後、ご連絡させていただきます。");
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      subject: "",
-      message: "",
+
+    // Create form data for Google Forms
+    const googleFormData = new FormData();
+    googleFormData.append('entry.1561324777', formData.name);
+    googleFormData.append('entry.2019402489', formData.email);
+    googleFormData.append('entry.1012941448', formData.company);
+    googleFormData.append('entry.1173601591', formData.subject);
+    googleFormData.append('entry.1147612083', formData.message);
+
+    // Submit to Google Forms
+    const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSenzlLJqh4gRB03Q6QB70mq2KyJCcgwDD58GKC9Wiffbrz__A/formResponse';
+
+    fetch(googleFormUrl, {
+      method: 'POST',
+      body: googleFormData,
+      mode: 'no-cors', // Required for Google Forms
+    }).then(() => {
+      alert("お問い合わせありがとうございます。確認後、ご連絡させていただきます。");
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        subject: "",
+        message: "",
+      });
+    }).catch((error) => {
+      console.error('Error submitting form:', error);
+      alert("送信中にエラーが発生しました。もう一度お試しください。");
     });
   };
 
@@ -38,9 +57,9 @@ export default function Contact() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="MiToA" className="h-10 w-auto" />
+        <div className="container max-w-[66%] py-2 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 ml-[-4cm]">
+            <img src="/logo.png" alt="MiToA" className="h-24 w-auto" />
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-foreground hover:text-primary transition-colors">
@@ -49,6 +68,9 @@ export default function Contact() {
             <Link href="/services" className="text-foreground hover:text-primary transition-colors">
               事業内容
             </Link>
+            <Link href="/mitoa" className="text-foreground hover:text-primary transition-colors">
+              MiToAのチャットボット
+            </Link>
             <Link href="/news" className="text-foreground hover:text-primary transition-colors">
               ニュース
             </Link>
@@ -56,9 +78,6 @@ export default function Contact() {
               お問い合わせ
             </Link>
           </div>
-          <Button variant="default" size="sm">
-            お問い合わせ
-          </Button>
         </div>
       </nav>
 
@@ -114,10 +133,10 @@ export default function Contact() {
                   <div>
                     <h3 className="font-bold text-foreground mb-2">電話</h3>
                     <a
-                      href="tel:+81-00-0000-0000"
+                      href="tel:+81-90-8475-3941"
                       className="text-primary hover:underline"
                     >
-                      +81-00-0000-0000
+                      090-8475-3941
                     </a>
                   </div>
                 </div>
@@ -197,10 +216,10 @@ export default function Contact() {
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">選択してください</option>
-                  <option value="chatbot">AIチャットbotについて</option>
-                  <option value="dx">DX導入支援について</option>
-                  <option value="automation">業務自動化について</option>
-                  <option value="other">その他のお問い合わせ</option>
+                  <option value="AIチャットbotについて">AIチャットbotについて</option>
+                  <option value="DX導入支援について">DX導入支援について</option>
+                  <option value="業務自動化について">業務自動化について</option>
+                  <option value="その他のお問い合わせ">その他のお問い合わせ</option>
                 </select>
               </div>
 
@@ -272,7 +291,7 @@ export default function Contact() {
         <div className="container">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <img src="/logo.jpg" alt="MiToA" className="h-8 w-auto mb-4" />
+              <img src="/logo.png" alt="MiToA" className="h-8 w-auto mb-4" />
               <p className="text-sm text-foreground/60">
                 AIチャットbotで業務を自動化
               </p>

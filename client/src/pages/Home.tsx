@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Clock, Lock, Settings, Zap, Lightbulb } from "lucide-react";
+import { ArrowRight, Sparkles, Clock, Settings, Zap, TrendingUp, Users } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
@@ -7,9 +7,9 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="MiToA" className="h-10 w-auto" />
+        <div className="container max-w-[66%] py-2 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 ml-[-4cm]">
+            <img src="/logo.png" alt="MiToA" className="h-24 w-auto" />
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-foreground hover:text-primary transition-colors text-sm">
@@ -18,6 +18,9 @@ export default function Home() {
             <Link href="/services" className="text-foreground hover:text-primary transition-colors text-sm">
               事業内容
             </Link>
+            <Link href="/mitoa" className="text-foreground hover:text-primary transition-colors text-sm">
+              MiToAのチャットボット
+            </Link>
             <Link href="/news" className="text-foreground hover:text-primary transition-colors text-sm">
               ニュース
             </Link>
@@ -25,36 +28,77 @@ export default function Home() {
               お問い合わせ
             </Link>
           </div>
-          <Button variant="default" size="sm">
-            お問い合わせ
-          </Button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-40">
+      <section className="relative overflow-hidden py-[6.25rem] md:py-[12.5rem]">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-        <div className="container relative z-10">
-          <div className="max-w-4xl">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-foreground leading-tight">
-              AIチャットbotで
-              <br />
-              <span className="text-primary">業務を自動化</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-foreground/80 mb-8 leading-relaxed max-w-2xl">
-              最先端のAI技術を活用した業務自動化とDX導入支援で、
-              企業の生産性向上と競争力強化を実現します。
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2">
-                詳しく知る <ArrowRight className="w-4 h-4" />
-              </Button>
-              <Button size="lg" variant="outline">
-                お問い合わせ
-              </Button>
+        <div className="container relative z-10 h-full">
+          <div className="grid md:grid-cols-2 gap-12 items-center h-full">
+            <div className="flex flex-col justify-center">
+              <h1 className="text-3xl md:text-4xl font-bold mb-6 text-foreground leading-tight">
+                自動で賢くなるチャットボット
+                <br />
+                <span className="text-primary">社員の知識を会社の資産に</span>
+              </h1>
+              <ul className="text-lg md:text-xl text-foreground/80 mb-6 space-y-3">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>対応できなかった質問を自動収集</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>質問に答えると自動で育つ</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>エンジニア不要で運用可能</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>カスタマーサポートや社内FAQ対応に利用可能</span>
+                </li>
+              </ul>
+              <div className="grid grid-cols-3 gap-3 mb-8 max-w-2xl">
+                <div className="relative group bg-white/80 rounded-lg p-4 border border-sky-400/40 hover:border-sky-400/80 transition-all hover:shadow-xl hover:shadow-sky-400/30 h-24 flex items-center justify-center backdrop-blur-sm">
+                  <div className="absolute inset-0 bg-gradient-to-br from-sky-400/5 to-blue-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="text-center relative z-10">
+                    <div className="text-xl md:text-2xl font-bold bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent mb-1 whitespace-nowrap">65%時短</div>
+                    <div className="text-[10px] md:text-xs text-foreground/70">圧倒的な効率化</div>
+                  </div>
+                </div>
+                <div className="relative group bg-white/80 rounded-lg p-4 border border-sky-400/40 hover:border-sky-400/80 transition-all hover:shadow-xl hover:shadow-sky-400/30 h-24 flex items-center justify-center backdrop-blur-sm">
+                  <div className="absolute inset-0 bg-gradient-to-br from-sky-400/5 to-blue-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="text-center relative z-10">
+                    <div className="text-xl md:text-2xl font-bold bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent mb-1 whitespace-nowrap">自社で管理</div>
+                    <div className="text-[10px] md:text-xs text-foreground/70">格安の維持費</div>
+                  </div>
+                </div>
+                <div className="relative group bg-white/80 rounded-lg p-4 border border-sky-400/40 hover:border-sky-400/80 transition-all hover:shadow-xl hover:shadow-sky-400/30 h-24 flex items-center justify-center backdrop-blur-sm">
+                  <div className="absolute inset-0 bg-gradient-to-br from-sky-400/5 to-blue-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="text-center relative z-10">
+                    <div className="text-xl md:text-2xl font-bold bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent mb-1 whitespace-nowrap">24/365</div>
+                    <div className="text-[10px] md:text-xs text-foreground/70">いつでも即応答</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/mitoa">
+                  <Button size="lg" className="gap-2">
+                    MiToAについて詳しく見る <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+                <Link href="/contact">
+                  <Button size="lg" variant="outline">
+                    お問い合わせ
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
+        <img src="/ai-brain.png" alt="AI Technology" className="absolute right-0 top-1/2 -translate-y-1/2 h-full w-auto object-cover" />
       </section>
 
       {/* Service Section */}
@@ -113,34 +157,34 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
+                icon: Zap,
+                title: "エンジニア不要で運用可能",
+                desc: "専門知識がなくても、誰でも簡単に使いこなせる直感的な操作性。導入後の保守や更新にエンジニアは不要です。ITリソースに制約がある企業でも、すぐに活用を開始できます。",
+              },
+              {
                 icon: Sparkles,
-                title: "最先端のAI/LLM技術",
-                desc: "最新のAIおよび大規模言語モデル（LLM）をコア技術とし、これまで人手に頼っていた複雑な作業を自動化します。高度なデータ分析や示唆に富んだインサイトを提供し、お客様のビジネスを新たなステージへと導きます。",
+                title: "社員の知識を会社の資産に",
+                desc: "社員が日々蓄積する知識やノウハウを、チャットボットという形で会社の資産として永続化。属人化を防ぎ、組織全体で活用できる知識基盤を構築します。退職や異動があっても、大切な知識は失われません。",
               },
               {
-                icon: Clock,
-                title: "直感的で洗練されたUI/UX",
-                desc: "シンプルさを追求した美しいデザインと、ストレスを感じさせない高速な動作を実現しました。ITツールに不慣れな方でも、導入したその日から誰もが直感的に使いこなせる、優れたユーザー体験を提供します。",
+                icon: TrendingUp,
+                title: "使うほど自動で育つ",
+                desc: "対応できなかった質問を自動収集し、社員が回答するだけでチャットボットが自動的に学習。使えば使うほど賢くなり、対応できる質問の範囲が広がっていきます。",
               },
               {
-                icon: Lock,
-                title: "エンタープライズレベルのセキュリティ",
-                desc: "大企業の厳しい要求水準を満たす、セキュリティ体制を構築しています。お客様の大切なデータをあらゆる脅威から保護し、プライバシーを確保することで、事業継続性に貢献し、安心してご利用いただけます。",
+                icon: Users,
+                title: "AIと人間の協働で高品質",
+                desc: "最新のAIが回答の叩き台を作成し、人間がレビュー・修正。AIの効率性と人間の判断力を組み合わせることで、短時間で高品質な回答を作成できます。",
               },
               {
                 icon: Settings,
-                title: "柔軟なカスタマイズ性",
-                desc: "お客様独自の業務フローやビジネス要件に合わせて、機能を柔軟に設定・拡張できます。変化の速い市場環境や多様なニーズに迅速に対応し、常に最適な形でご活用いただくことが可能です。",
+                title: "多様な用途に対応",
+                desc: "カスタマーサポート、社内FAQ、新人研修など、様々な場面で活用可能。一つのプラットフォームで複数の課題を解決し、組織全体の業務効率化を実現します。",
               },
               {
-                icon: Zap,
-                title: "導入・運用コストの最適化",
-                desc: "優れた操作性により、導入時の学習コストや社員へのトレーニング時間を大幅に削減します。誰でもすぐに活用できるため、費用対効果を最大化し、スムーズな社内浸透を実現します。",
-              },
-              {
-                icon: Lightbulb,
-                title: "安定性と信頼性",
-                desc: "緻密に構造化されたシステム設計により、常に安定したパフォーマンスを発揮します。お客様のビジネス規模の拡大に合わせて柔軟にスケールし、将来にわたって信頼できるパートナーであり続けます。",
+                icon: Clock,
+                title: "短期間でROI実現",
+                desc: "作業時間65%削減、年間数百万円のコスト削減を実現。投資回収期間はわずか3~6ヶ月。導入後すぐに効果を実感でき、長期的に高い費用対効果を維持します。",
               },
             ].map((benefit, idx) => {
               const IconComponent = benefit.icon;
@@ -181,7 +225,7 @@ export default function Home() {
               </Link>
             </div>
             <div className="flex justify-center">
-              <img src="/logo.jpg" alt="MiToA Logo" className="max-w-sm w-full h-auto" />
+              <img src="/logo.png" alt="MiToA Logo" className="max-w-sm w-full h-auto" />
             </div>
           </div>
         </div>
@@ -244,7 +288,7 @@ export default function Home() {
         <div className="container">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <img src="/logo.jpg" alt="MiToA" className="h-8 w-auto mb-4" />
+              <img src="/logo.png" alt="MiToA" className="h-8 w-auto mb-4" />
               <p className="text-sm text-foreground/60">
                 AIチャットbotで業務を自動化
               </p>

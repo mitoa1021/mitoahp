@@ -8,12 +8,14 @@ import Home from "./pages/Home";
 import Services from "./pages/Services";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
+import Mitoa from "./pages/Mitoa";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/services"} component={Services} />
+      <Route path={"/mitoa"} component={Mitoa} />
       <Route path={"/news"} component={News} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/404"} component={NotFound} />

@@ -18,9 +18,9 @@ export default function News() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="MiToA" className="h-10 w-auto" />
+        <div className="container max-w-[66%] py-2 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 ml-[-4cm]">
+            <img src="/logo.png" alt="MiToA" className="h-24 w-auto" />
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-foreground hover:text-primary transition-colors">
@@ -29,6 +29,9 @@ export default function News() {
             <Link href="/services" className="text-foreground hover:text-primary transition-colors">
               事業内容
             </Link>
+            <Link href="/mitoa" className="text-foreground hover:text-primary transition-colors">
+              MiToAのチャットボット
+            </Link>
             <Link href="/news" className="text-primary font-semibold">
               ニュース
             </Link>
@@ -36,9 +39,6 @@ export default function News() {
               お問い合わせ
             </Link>
           </div>
-          <Button variant="default" size="sm">
-            お問い合わせ
-          </Button>
         </div>
       </nav>
 
@@ -141,7 +141,7 @@ export default function News() {
         <div className="container">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <img src="/logo.jpg" alt="MiToA" className="h-8 w-auto mb-4" />
+              <img src="/logo.png" alt="MiToA" className="h-8 w-auto mb-4" />
               <p className="text-sm text-foreground/60">
                 AIチャットbotで業務を自動化
               </p>

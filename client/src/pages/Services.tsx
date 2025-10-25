@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Bot, Cog, TrendingUp, Users, CheckCircle } from "lucide-react";
+import { ArrowRight, Bot, Cog, TrendingUp, Users, CheckCircle, Zap } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Services() {
@@ -7,9 +7,9 @@ export default function Services() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="MiToA" className="h-10 w-auto" />
+        <div className="container max-w-[66%] py-2 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2 ml-[-4cm]">
+            <img src="/logo.png" alt="MiToA" className="h-24 w-auto" />
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-foreground hover:text-primary transition-colors">
@@ -18,6 +18,9 @@ export default function Services() {
             <Link href="/services" className="text-primary font-semibold">
               事業内容
             </Link>
+            <Link href="/mitoa" className="text-foreground hover:text-primary transition-colors">
+              MiToAのチャットボット
+            </Link>
             <Link href="/news" className="text-foreground hover:text-primary transition-colors">
               ニュース
             </Link>
@@ -25,9 +28,6 @@ export default function Services() {
               お問い合わせ
             </Link>
           </div>
-          <Button variant="default" size="sm">
-            お問い合わせ
-          </Button>
         </div>
       </nav>
 
@@ -61,34 +61,40 @@ export default function Services() {
               </div>
               <div className="order-1 md:order-2">
                 <h3 className="text-3xl font-bold mb-4 text-foreground">
-                  AIチャットbot開発
+                  MiToA
                 </h3>
                 <p className="text-lg text-foreground/70 mb-6 leading-relaxed">
-                  最先端のAI技術を活用したカスタムチャットbotの開発・導入。
-                  顧客対応の自動化から社内業務の効率化まで、
-                  幅広いニーズに対応します。
+                  エンジニア不要で運用できる、自動で賢くなるチャットボット。
+                  対応できなかった質問を自動で集め、答えるだけで賢くなります。
+                  保守・運用コストを抑え、無駄なやり取りを削減します。
                 </p>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">24時間対応の顧客サポート</span>
+                    <span className="text-foreground/80">エンジニア不要: 専門知識なしで誰でも運用可能</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">社内問い合わせ対応の自動化</span>
+                    <span className="text-foreground/80">低コスト: 保守・運用費用を大幅削減</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">複数言語対応</span>
+                    <span className="text-foreground/80">自動収集: 対応できなかった質問を自動でリスト化</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">既存システムとの連携</span>
+                    <span className="text-foreground/80">AI支援: 回答の下書きを自動作成、確認するだけ</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground/80">効率化: 作業時間65%削減、無駄なやり取りを排除</span>
                   </li>
                 </ul>
-                <Button className="gap-2">
-                  詳しく知る <ArrowRight className="w-4 h-4" />
-                </Button>
+                <Link href="/mitoa">
+                  <Button className="gap-2">
+                    詳しく見る <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -220,11 +226,11 @@ export default function Services() {
               </div>
             </div>
             <div className="flex gap-4">
-              <TrendingUp className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
+              <Zap className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
               <div>
-                <h3 className="text-xl font-bold mb-2 text-foreground">実績と信頼</h3>
+                <h3 className="text-xl font-bold mb-2 text-foreground">格安の維持費用</h3>
                 <p className="text-foreground/70">
-                  多くの企業のDX推進を支援し、成果を上げています
+                  導入後エンジニアが不要なため、維持費用を大幅に削減できます
                 </p>
               </div>
             </div>
@@ -273,7 +279,7 @@ export default function Services() {
         <div className="container">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <img src="/logo.jpg" alt="MiToA" className="h-8 w-auto mb-4" />
+              <img src="/logo.png" alt="MiToA" className="h-8 w-auto mb-4" />
               <p className="text-sm text-foreground/60">
                 AIチャットbotで業務を自動化
               </p>
