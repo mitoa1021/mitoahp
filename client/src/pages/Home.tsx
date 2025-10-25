@@ -7,9 +7,9 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container max-w-[66%] py-2 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 ml-[-4cm]">
-            <img src="/logo.png" alt="MiToA" className="h-24 w-auto" />
+        <div className="container max-w-full md:max-w-[66%] py-2 flex items-center justify-between px-4">
+          <Link href="/" className="flex items-center gap-2 ml-0 md:ml-[-4cm]">
+            <img src="/logo.png" alt="MiToA" className="h-12 md:h-24 w-auto" />
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-foreground hover:text-primary transition-colors text-sm">
@@ -98,7 +98,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <img src="/ai-brain.png" alt="AI Technology" className="absolute right-0 top-1/2 -translate-y-1/2 h-full w-auto object-cover" />
+        <img src="/ai-brain.png" alt="AI Technology" className="absolute right-0 top-1/2 -translate-y-1/2 h-full w-auto object-cover opacity-20 md:opacity-100" />
       </section>
 
       {/* Service Section */}

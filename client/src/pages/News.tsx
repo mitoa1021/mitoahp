@@ -18,9 +18,9 @@ export default function News() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container max-w-[66%] py-2 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 ml-[-4cm]">
-            <img src="/logo.png" alt="MiToA" className="h-24 w-auto" />
+        <div className="container max-w-full md:max-w-[66%] py-2 flex items-center justify-between px-4">
+          <Link href="/" className="flex items-center gap-2 ml-0 md:ml-[-4cm]">
+            <img src="/logo.png" alt="MiToA" className="h-12 md:h-24 w-auto" />
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/" className="text-foreground hover:text-primary transition-colors">
