@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Menu, X } from "lucide-react";
 import { Link } from "wouter";
+import { useState } from "react";
 
 export default function News() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const newsItems = [
     {
       id: 1,
@@ -17,29 +19,65 @@ export default function News() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container max-w-full md:max-w-[66%] py-2 flex items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 ml-0 md:ml-[-4cm]">
-            <img src="/logo.png" alt="MiToA" className="h-12 md:h-24 w-auto" />
+      <nav className="sticky top-0 z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(20, 20, 20, 0.95)' }}>
+        <div className="py-2 flex items-center justify-between pl-0 pr-4 md:pr-8">
+          <Link href="/" className="flex items-center gap-2">
+            <img
+              src="/logo-white.png"
+              alt="MiToA"
+              className="h-20 md:h-32 w-auto ml-4 md:ml-6"
+            />
           </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-foreground hover:text-primary transition-colors">
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="/" className="text-white hover:text-primary transition-colors text-sm font-bold">
               ホーム
             </Link>
-            <Link href="/services" className="text-foreground hover:text-primary transition-colors">
+            <span className="text-white/40">|</span>
+            <Link href="/services" className="text-white hover:text-primary transition-colors text-sm font-bold">
               事業内容
             </Link>
-            <Link href="/mitoa" className="text-foreground hover:text-primary transition-colors">
-              MiToAのチャットボット
-            </Link>
-            <Link href="/news" className="text-primary font-semibold">
+            <span className="text-white/40">|</span>
+            <Link href="/news" className="text-white hover:text-primary transition-colors text-sm font-bold">
               ニュース
             </Link>
-            <Link href="/contact" className="text-foreground hover:text-primary transition-colors">
+            <span className="text-white/40">|</span>
+            <Link href="/contact" className="text-white hover:text-primary transition-colors text-sm font-bold">
               お問い合わせ
             </Link>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-white p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="メニュー"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-slate-900/95 backdrop-blur-md border-t border-white/10">
+            <div className="flex flex-col py-4">
+              <Link href="/" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                ホーム
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/services" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                事業内容
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/news" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                ニュース
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/contact" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                お問い合わせ
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}

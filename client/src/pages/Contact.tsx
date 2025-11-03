@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Menu, X } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 
 export default function Contact() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -56,29 +57,57 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container max-w-full md:max-w-[66%] py-2 flex items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 ml-0 md:ml-[-4cm]">
-            <img src="/logo.png" alt="MiToA" className="h-12 md:h-24 w-auto" />
+      <nav className="sticky top-0 z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(20, 20, 20, 0.95)' }}>
+        <div className="py-2 flex items-center justify-between pl-0 pr-4 md:pr-8">
+          <Link href="/" className="flex items-center gap-2">
+            <img
+              src="/logo-white.png"
+              alt="MiToA"
+              className="h-20 md:h-32 w-auto ml-4 md:ml-6"
+            />
           </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-foreground hover:text-primary transition-colors">
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="/" className="text-white hover:text-primary transition-colors text-sm font-bold">
               ホーム
             </Link>
-            <Link href="/services" className="text-foreground hover:text-primary transition-colors">
+            <span className="text-white/40">|</span>
+            <Link href="/services" className="text-white hover:text-primary transition-colors text-sm font-bold">
               事業内容
             </Link>
-            <Link href="/mitoa" className="text-foreground hover:text-primary transition-colors">
-              MiToAのチャットボット
-            </Link>
-            <Link href="/news" className="text-foreground hover:text-primary transition-colors">
-              ニュース
-            </Link>
-            <Link href="/contact" className="text-primary font-semibold">
+            <span className="text-white/40">|</span>
+            <Link href="/contact" className="text-white hover:text-primary transition-colors text-sm font-bold">
               お問い合わせ
             </Link>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-white p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="メニュー"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-slate-900/95 backdrop-blur-md border-t border-white/10">
+            <div className="flex flex-col py-4">
+              <Link href="/" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                ホーム
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/services" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                事業内容
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/contact" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                お問い合わせ
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -287,45 +316,57 @@ export default function Contact() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-foreground/5 border-t border-border py-12">
-        <div className="container">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <img src="/logo.png" alt="MiToA" className="h-8 w-auto mb-4" />
-              <p className="text-sm text-foreground/60">
-                AIチャットbotで業務を自動化
+      <footer className="border-t border-white/10 bg-neutral-950 text-white">
+        <div className="container py-12 lg:py-16">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
+            <div className="flex flex-col gap-6">
+              <img src="/logo-white.png" alt="MiToA" className="w-20 h-auto md:w-24 -ml-2 md:-ml-3" />
+              <p className="text-xs text-white/40 sm:text-sm">
+                &copy; 2025 株式会社MiToA. All rights reserved.
               </p>
             </div>
-            <div>
-              <h4 className="font-bold text-foreground mb-4">サービス</h4>
-              <ul className="space-y-2 text-sm text-foreground/70">
-                <li><Link href="/services" className="hover:text-primary transition-colors">事業内容</Link></li>
-                <li><Link href="/services" className="hover:text-primary transition-colors">AIチャットbot</Link></li>
-                <li><Link href="/services" className="hover:text-primary transition-colors">DX導入支援</Link></li>
+
+            <div className="space-y-6">
+              <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">サービス</h4>
+              <ul className="space-y-3 text-sm text-white/70">
+                <li>
+                  <Link href="/services" className="transition-colors hover:text-primary">
+                    AIチャットbot
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services" className="transition-colors hover:text-primary">
+                    生成AI活用プラットフォーム
+                  </Link>
+                </li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-bold text-foreground mb-4">会社</h4>
-              <ul className="space-y-2 text-sm text-foreground/70">
-                <li><Link href="/" className="hover:text-primary transition-colors">ホーム</Link></li>
-                <li><Link href="/news" className="hover:text-primary transition-colors">ニュース</Link></li>
-                <li><Link href="/contact" className="hover:text-primary transition-colors">お問い合わせ</Link></li>
+
+            <div className="space-y-6">
+              <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">会社情報</h4>
+              <ul className="space-y-3 text-sm text-white/70">
+                <li>
+                  <Link href="/" className="transition-colors hover:text-primary">
+                    ホーム
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="transition-colors hover:text-primary">
+                    お問い合わせ
+                  </Link>
+                </li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-bold text-foreground mb-4">お問い合わせ</h4>
-              <p className="text-sm text-foreground/70">
-                ご質問やご相談は、<br />
-                お気軽にお問い合わせください。
+
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">ご質問・ご相談</h4>
+              <p className="text-sm text-white/70 leading-relaxed">
+                お客様の課題に合わせた最適なご提案をいたします。まずはお気軽にご連絡ください。
               </p>
             </div>
-          </div>
-          <div className="border-t border-border pt-8 text-center text-sm text-foreground/60">
-            <p>&copy; 2025 株式会社MiToA. All rights reserved.</p>
           </div>
         </div>
       </footer>
     </div>
   );
 }
-

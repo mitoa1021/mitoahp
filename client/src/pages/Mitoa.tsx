@@ -1,35 +1,66 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle, Clock, Shield, TrendingUp, Users, Zap, Brain } from "lucide-react";
+import { ArrowRight, CheckCircle, Clock, Shield, TrendingUp, Users, Zap, Brain, Menu, X } from "lucide-react";
 import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
 
 export default function Mitoa() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container max-w-full md:max-w-[66%] py-2 flex items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 ml-0 md:ml-[-4cm]">
-            <img src="/logo.png" alt="MiToA" className="h-12 md:h-24 w-auto" />
+      <nav className="sticky top-0 z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(20, 20, 20, 0.95)' }}>
+        <div className="py-2 flex items-center justify-between pl-0 pr-4 md:pr-8">
+          <Link href="/" className="flex items-center gap-2">
+            <img
+              src="/logo-white.png"
+              alt="MiToA"
+              className="h-20 md:h-32 w-auto ml-4 md:ml-6"
+            />
           </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-foreground hover:text-primary transition-colors">
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="/" className="text-white hover:text-primary transition-colors text-sm font-bold">
               ホーム
             </Link>
-            <Link href="/services" className="text-foreground hover:text-primary transition-colors">
+            <span className="text-white/40">|</span>
+            <Link href="/services" className="text-white hover:text-primary transition-colors text-sm font-bold">
               事業内容
             </Link>
-            <Link href="/mitoa" className="text-primary font-semibold">
-              MiToAのチャットボット
-            </Link>
-            <Link href="/news" className="text-foreground hover:text-primary transition-colors">
-              ニュース
-            </Link>
-            <Link href="/contact" className="text-foreground hover:text-primary transition-colors">
+            <span className="text-white/40">|</span>
+            <Link href="/contact" className="text-white hover:text-primary transition-colors text-sm font-bold">
               お問い合わせ
             </Link>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-white p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="メニュー"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-slate-900/95 backdrop-blur-md border-t border-white/10">
+            <div className="flex flex-col py-4">
+              <Link href="/" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                ホーム
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/services" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                事業内容
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/contact" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                お問い合わせ
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -141,6 +172,27 @@ export default function Mitoa() {
               <p className="text-lg font-semibold text-primary">
                 → サイクルを回すほど業務が楽になる
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* App Screenshot Section */}
+      <section className="py-20 md:py-32 bg-card/50">
+        <div className="container">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-foreground">
+            実際の管理画面
+          </h2>
+          <p className="text-center text-foreground/70 mb-12 max-w-2xl mx-auto">
+            シンプルで直感的な操作画面。エンジニア不要で誰でも簡単に使いこなせます。
+          </p>
+          <div className="max-w-6xl mx-auto">
+            <div className="rounded-xl overflow-hidden shadow-2xl border border-border">
+              <img
+                src="/PC&iPhone.PNG"
+                alt="MiToA Chatbot Studioの画面イメージ"
+                className="w-full h-auto"
+              />
             </div>
           </div>
         </div>
@@ -508,7 +560,6 @@ export default function Mitoa() {
               <h4 className="font-bold text-foreground mb-4">会社</h4>
               <ul className="space-y-2 text-sm text-foreground/70">
                 <li><Link href="/" className="hover:text-primary transition-colors">ホーム</Link></li>
-                <li><Link href="/news" className="hover:text-primary transition-colors">ニュース</Link></li>
                 <li><Link href="/contact" className="hover:text-primary transition-colors">お問い合わせ</Link></li>
               </ul>
             </div>

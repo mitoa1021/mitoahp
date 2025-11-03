@@ -1,319 +1,232 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Bot, Cog, TrendingUp, Users, CheckCircle, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle, Menu, X } from "lucide-react";
 import { Link } from "wouter";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Services() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container max-w-full md:max-w-[66%] py-2 flex items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 ml-0 md:ml-[-4cm]">
-            <img src="/logo.png" alt="MiToA" className="h-12 md:h-24 w-auto" />
+      <nav className="sticky top-0 z-50 backdrop-blur-md" style={{ backgroundColor: 'rgba(20, 20, 20, 0.95)' }}>
+        <div className="py-2 flex items-center justify-between pl-0 pr-4 md:pr-8">
+          <Link href="/" className="flex items-center gap-2">
+            <img
+              src="/logo-white.png"
+              alt="MiToA"
+              className="h-20 md:h-32 w-auto ml-4 md:ml-6"
+            />
           </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-foreground hover:text-primary transition-colors">
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="/" className="text-white hover:text-primary transition-colors text-sm font-bold">
               ホーム
             </Link>
-            <Link href="/services" className="text-primary font-semibold">
+            <span className="text-white/40">|</span>
+            <Link href="/services" className="text-white hover:text-primary transition-colors text-sm font-bold">
               事業内容
             </Link>
-            <Link href="/mitoa" className="text-foreground hover:text-primary transition-colors">
-              MiToAのチャットボット
-            </Link>
-            <Link href="/news" className="text-foreground hover:text-primary transition-colors">
-              ニュース
-            </Link>
-            <Link href="/contact" className="text-foreground hover:text-primary transition-colors">
+            <span className="text-white/40">|</span>
+            <Link href="/contact" className="text-white hover:text-primary transition-colors text-sm font-bold">
               お問い合わせ
             </Link>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-white p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="メニュー"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-slate-900/95 backdrop-blur-md border-t border-white/10">
+            <div className="flex flex-col py-4">
+              <Link href="/" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                ホーム
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/services" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                事業内容
+              </Link>
+              <div className="border-t border-white/10 mx-6"></div>
+              <Link href="/contact" className="text-white hover:bg-white/10 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                お問い合わせ
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 via-transparent to-accent/5">
-        <div className="container">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            事業内容
-          </h1>
-          <p className="text-lg text-foreground/70 max-w-2xl">
-            AIチャットbotを活用した業務自動化とDX導入支援で、
-            企業の課題を解決し、未来のビジネスを実現します。
-          </p>
-        </div>
-      </section>
-
-      {/* Main Services */}
       <section className="py-20 md:py-32">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-foreground">
-            主要サービス
-          </h2>
+        <div className="container max-w-6xl space-y-20">
+          <motion.div
+            className="space-y-2"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <p className="text-6xl md:text-7xl font-extrabold text-gray-200 uppercase leading-none" style={{ letterSpacing: '0.05em' }}>SERVICE</p>
+            <h2 className="-mt-6 md:-mt-8 text-4xl md:text-5xl font-extrabold text-foreground" style={{ fontFamily: "'Zen Kaku Gothic New', 'Inter', sans-serif" }}>
+              事業内容
+            </h2>
+          </motion.div>
 
-          {/* Service 1: AI Chatbot */}
-          <div className="mb-20">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="order-2 md:order-1">
-                <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-12 flex items-center justify-center min-h-80">
-                  <Bot className="w-32 h-32 text-primary/30" />
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <motion.img
+                src="/PC&iPhone.PNG"
+                alt="MiToA Chatbot Studioの画面イメージ"
+                className="w-full h-auto"
+                initial={{ opacity: 0, x: -60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-100px" }}
+              />
+            </div>
+            <motion.div
+              className="order-1 md:order-2 space-y-6"
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <Link href="/services/chatbot" className="group space-y-3 block">
+                <span className="text-xs uppercase tracking-[0.4em] text-foreground/50">AI CHATBOT</span>
+                <div className="flex items-center gap-3">
+                  <h2 className="text-3xl md:text-4xl font-bold text-foreground transition-transform duration-300 group-hover:scale-105">
+                    MiToA Chatbot Studio
+                  </h2>
+                  <ArrowRight className="h-8 w-8 text-foreground transition-transform duration-300 group-hover:translate-x-2" />
                 </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <h3 className="text-3xl font-bold mb-4 text-foreground">
-                  MiToA
-                </h3>
-                <p className="text-lg text-foreground/70 mb-6 leading-relaxed">
-                  エンジニア不要で運用できる、自動で賢くなるチャットボット。
-                  対応できなかった質問を自動で集め、答えるだけで賢くなります。
-                  保守・運用コストを抑え、無駄なやり取りを削減します。
+                <p className="text-base text-foreground/70 leading-relaxed">
+                  “答えられなかった”をチャンスに変える。管理画面で回答するだけでAIが賢くなり続ける、運用負担ゼロのチャットボット。
+                  AIの成長に最適化された革新的なサービスです。
                 </p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">エンジニア不要: 専門知識なしで誰でも運用可能</span>
+              </Link>
+              <ul className="space-y-3 text-sm text-foreground/80">
+                {["管理画面からの回答登録で即時学習・アップデート", "カスタマーサポート業務、社内問い合わせ対応に最適", "問い合わせ用公式LINEやWebサイトへの即時展開が可能", "Teams・Slack・LINE WORKSなど既存システムとの柔軟な連携"].map((point) => (
+                  <li key={point} className="flex items-start gap-3">
+                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
+                    <span>{point}</span>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">低コスト: 保守・運用費用を大幅削減</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">自動収集: 対応できなかった質問を自動でリスト化</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">AI支援: 回答の下書きを自動作成、確認するだけ</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">効率化: 作業時間65%削減、無駄なやり取りを排除</span>
-                  </li>
-                </ul>
-                <Link href="/mitoa">
-                  <Button className="gap-2">
-                    詳しく見る <ArrowRight className="w-4 h-4" />
+                ))}
+              </ul>
+              <div>
+                <Link href="/services/chatbot">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="gap-2 border-foreground/30 text-foreground/70 hover:bg-foreground/5"
+                  >
+                    詳細を見る <ArrowRight className="h-5 w-5" />
                   </Button>
                 </Link>
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Service 2: DX Support */}
-          <div className="mb-20">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h3 className="text-3xl font-bold mb-4 text-foreground">
-                  DX導入支援
-                </h3>
-                <p className="text-lg text-foreground/70 mb-6 leading-relaxed">
-                  企業のデジタルトランスフォーメーション全体をサポート。
-                  戦略立案から実装、運用まで、
-                  一貫したコンサルティングサービスを提供します。
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              className="order-2 md:order-1"
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <img
+                src="/senior_platform.png"
+                alt="AI活用プラットフォーム"
+                className="w-full h-auto rounded-3xl border border-border shadow-lg object-cover"
+              />
+            </motion.div>
+            <motion.div
+              className="order-1 md:order-2 space-y-6"
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="space-y-3">
+                <span className="text-xs uppercase tracking-[0.4em] text-foreground/50">AI PLATFORM</span>
+                <div className="flex items-center gap-3">
+                  <h2 className="text-3xl md:text-4xl font-bold text-foreground">AI活用プラットフォーム</h2>
+                </div>
+                <p className="text-base text-foreground/70 leading-relaxed">
+                  暮らしの中にAIを。老後の人生にゆとりと彩りを。
+                  シニア世代を中心に暮らしをより良くするための生成AI活用プラットフォームを提供しております。
                 </p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">DX戦略立案・コンサルティング</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">業務プロセス改善</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">システム導入・運用支援</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">人材育成・研修</span>
-                  </li>
-                </ul>
-                <Button className="gap-2">
-                  詳しく知る <ArrowRight className="w-4 h-4" />
+              </div>
+              <div>
+                <Button
+                  type="button"
+                  disabled
+                  variant="outline"
+                  className="gap-2 bg-white text-foreground/60 border-foreground/30 disabled:bg-white disabled:text-foreground/60 disabled:border-foreground/30 disabled:opacity-100 disabled:cursor-default"
+                >
+                  Coming soon...
                 </Button>
               </div>
-              <div>
-                <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-12 flex items-center justify-center min-h-80">
-                  <Cog className="w-32 h-32 text-primary/30" />
-                </div>
-              </div>
-            </div>
+            </motion.div>
           </div>
-
-          {/* Service 3: Business Automation */}
-          <div>
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="order-2 md:order-1">
-                <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl p-12 flex items-center justify-center min-h-80">
-                  <TrendingUp className="w-32 h-32 text-primary/30" />
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <h3 className="text-3xl font-bold mb-4 text-foreground">
-                  業務自動化ソリューション
-                </h3>
-                <p className="text-lg text-foreground/70 mb-6 leading-relaxed">
-                  定型業務の自動化により、人的リソースを有効活用。
-                  生産性向上とコスト削減を同時に実現します。
-                </p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">RPA導入・運用</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">ワークフロー自動化</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">データ処理の自動化</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground/80">効果測定・最適化</span>
-                  </li>
-                </ul>
-                <Button className="gap-2">
-                  詳しく知る <ArrowRight className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section className="py-20 md:py-32 bg-card/50">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-foreground">
-            実装プロセス
-          </h2>
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { step: "1", title: "ヒアリング", desc: "企業の課題と目標を詳しくお聞きします" },
-              { step: "2", title: "提案", desc: "最適なソリューションをご提案します" },
-              { step: "3", title: "実装", desc: "プロフェッショナルチームが実装を進めます" },
-              { step: "4", title: "運用・改善", desc: "継続的なサポートと最適化を提供します" },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-2xl font-bold mx-auto mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
-                <p className="text-foreground/70">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-20 md:py-32">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-foreground">
-            MiToAが選ばれる理由
-          </h2>
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="flex gap-4">
-              <Users className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-bold mb-2 text-foreground">経験豊富なチーム</h3>
-                <p className="text-foreground/70">
-                  AI・DX分野での豊富な実績と経験を持つプロフェッショナルチーム
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Zap className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-bold mb-2 text-foreground">格安の維持費用</h3>
-                <p className="text-foreground/70">
-                  導入後エンジニアが不要なため、維持費用を大幅に削減できます
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Cog className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-bold mb-2 text-foreground">カスタムソリューション</h3>
-                <p className="text-foreground/70">
-                  企業ごとの課題に合わせた最適なソリューションを提供
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Bot className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-bold mb-2 text-foreground">継続的なサポート</h3>
-                <p className="text-foreground/70">
-                  導入後も継続的なサポートと改善を提供
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10">
-        <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-            ご質問やご相談はお気軽に
-          </h2>
-          <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            AIチャットbotやDX導入についてのご質問、
-            ご相談は、いつでもお気軽にお問い合わせください。
-          </p>
-          <Link href="/contact">
-            <Button size="lg" className="gap-2">
-              お問い合わせフォームへ <ArrowRight className="w-4 h-4" />
-            </Button>
-          </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-foreground/5 border-t border-border py-12">
-        <div className="container">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <img src="/logo.png" alt="MiToA" className="h-8 w-auto mb-4" />
-              <p className="text-sm text-foreground/60">
-                AIチャットbotで業務を自動化
+      <footer className="border-t border-white/10 bg-neutral-950 text-white">
+        <div className="container py-12 lg:py-16">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
+            <div className="flex flex-col gap-6">
+              <img src="/logo-white.png" alt="MiToA" className="w-24 h-auto md:w-28 -ml-2 md:-ml-3" />
+              <p className="text-xs text-white/40">
+                &copy; 2025 株式会社MiToA. All rights reserved.
               </p>
             </div>
-            <div>
-              <h4 className="font-bold text-foreground mb-4">サービス</h4>
-              <ul className="space-y-2 text-sm text-foreground/70">
-                <li><Link href="/services" className="hover:text-primary transition-colors">事業内容</Link></li>
-                <li><Link href="/services" className="hover:text-primary transition-colors">AIチャットbot</Link></li>
-                <li><Link href="/services" className="hover:text-primary transition-colors">DX導入支援</Link></li>
+            <div className="space-y-5">
+              <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">サービス</h4>
+              <ul className="space-y-3 text-sm text-white/70">
+                <li>
+                  <Link href="/services" className="transition-colors hover:text-primary">
+                    AIチャットbot
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services" className="transition-colors hover:text-primary">
+                    生成AI活用プラットフォーム
+                  </Link>
+                </li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-bold text-foreground mb-4">会社</h4>
-              <ul className="space-y-2 text-sm text-foreground/70">
-                <li><Link href="/" className="hover:text-primary transition-colors">ホーム</Link></li>
-                <li><Link href="/news" className="hover:text-primary transition-colors">ニュース</Link></li>
-                <li><Link href="/contact" className="hover:text-primary transition-colors">お問い合わせ</Link></li>
+            <div className="space-y-5">
+              <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">会社情報</h4>
+              <ul className="space-y-3 text-sm text-white/70">
+                <li>
+                  <Link href="/" className="transition-colors hover:text-primary">
+                    ホーム
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="transition-colors hover:text-primary">
+                    お問い合わせ
+                  </Link>
+                </li>
               </ul>
             </div>
-            <div>
-              <h4 className="font-bold text-foreground mb-4">お問い合わせ</h4>
-              <p className="text-sm text-foreground/70">
-                ご質問やご相談は、<br />
-                お気軽にお問い合わせください。
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">ご質問・ご相談</h4>
+              <p className="text-sm text-white/70 leading-relaxed">
+                お客様の課題に合わせた最適なご提案をいたします。まずはお気軽にご連絡ください。
               </p>
             </div>
-          </div>
-          <div className="border-t border-border pt-8 text-center text-sm text-foreground/60">
-            <p>&copy; 2025 株式会社MiToA. All rights reserved.</p>
           </div>
         </div>
       </footer>
     </div>
   );
 }
-

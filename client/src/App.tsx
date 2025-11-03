@@ -9,12 +9,14 @@ import Services from "./pages/Services";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
 import Mitoa from "./pages/Mitoa";
+import ServicesChatbot from "./pages/ServicesChatbot";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/services"} component={Services} />
+      <Route path={"/services/chatbot"} component={ServicesChatbot} />
       <Route path={"/mitoa"} component={Mitoa} />
       <Route path={"/news"} component={News} />
       <Route path={"/contact"} component={Contact} />

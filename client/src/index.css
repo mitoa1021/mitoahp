@@ -178,4 +178,40 @@
       max-width: 1280px; /* Standard content width */
     }
   }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+}
+
+@layer utilities {
+  @keyframes hero-fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-hero-fade-up {
+    opacity: 0;
+    animation: hero-fade-up 0.9s ease forwards;
+  }
+
+  .animate-hero-delay-150 {
+    animation-delay: 0.15s;
+  }
+
+  .animate-hero-delay-300 {
+    animation-delay: 0.3s;
+  }
 }
