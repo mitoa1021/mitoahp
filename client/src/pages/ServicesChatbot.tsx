@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import type { LucideIcon } from "lucide-react";
 import {
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
   Brain,
@@ -66,18 +67,23 @@ const knowledgeSteps = [
 const timeline = [
   {
     phase: "Week 1–2",
-    title: "70%モデルを構築",
-    description: "要件整理と資料受領で一次データを整備。初期モデルをお渡しし、改善サイクルを開始します。",
+    title: "当社が初期モデルを構築",
+    description:
+      "要件整理と資料受領で初期モデルを構築。資料に加えて当社独自の業界別FAQを組み込み、最適な形にデータを処理し、チャットボットと管理用Webアプリをお渡しします。",
+    image: "/tree1.PNG",
   },
   {
     phase: "Week 2–4",
-    title: "現場UATで90%へ",
-    description: "未回答を現場で補完しながら回答率を引き上げます。推測ゼロ運用の基準も設定。",
+    title: "現場検証で精度向上",
+    description:
+      "平常業務の中で出てきた質問をチャットボットにそのまま投げるだけでOK。チャットボットが答えられなかったら有識者がWebアプリ上で回答し、\"育つ\"体験を共有します。",
+    image: "/tree2.PNG",
   },
   {
     phase: "Week 4〜",
     title: "本番運用スタート",
-    description: "朝の一括補填で100%に近づけつつ、フォールバック率・根拠提示率をモニタリングします。",
+    description: "リリース可能と判断したら社内外へ公開。毎日の質問を数分で補完し、回答精度を100%へ近づけます。",
+    image: "/tree3.PNG",
   },
 ];
 
@@ -514,6 +520,7 @@ export default function ServicesChatbot() {
         [data-animate="fade"].animate-in {
           opacity: 1;
         }
+
       `}</style>
 
       {/* Hero */}
@@ -682,7 +689,7 @@ export default function ServicesChatbot() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
-                    エンジニア不要で<span className="text-yellow-500">低価格</span>。
+                    エンジニア不要で<br /><span className="text-yellow-500">業界最安級価格</span>。
                   </h3>
                   <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
                     自分たちで育てる仕組みだからこそ、導入後のエンジニアとの連携不要で時間・価格が抑えられる
@@ -961,8 +968,43 @@ export default function ServicesChatbot() {
       </section>
 
       {/* Knowledge Flow */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container">
+      <section className="relative overflow-hidden py-16 md:py-24 bg-white">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-indigo-950" />
+          <img
+            src="/ai-brain.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover opacity-35 mix-blend-screen"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute -top-24 left-0 right-0 h-72 opacity-60 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle at 20% 30%, rgba(59,130,246,0.45), transparent 55%), radial-gradient(circle at 70% 20%, rgba(14,165,233,0.4), transparent 50%), radial-gradient(circle at 60% 80%, rgba(16,185,129,0.4), transparent 45%)",
+            }}
+          />
+          <div className="absolute inset-0">
+            {[
+              { top: "10%", left: "12%", delay: "0.2s" },
+              { top: "25%", left: "65%", delay: "0.4s" },
+              { top: "55%", left: "20%", delay: "0.1s" },
+              { top: "70%", left: "75%", delay: "0.3s" },
+            ].map((shape) => (
+              <div
+                key={`${shape.top}-${shape.left}`}
+                className="absolute h-16 w-16 bg-gradient-to-br from-cyan-300/80 via-sky-400/70 to-indigo-500/80 opacity-60 rotate-12 blur-[0.5px]"
+                style={{
+                  top: shape.top,
+                  left: shape.left,
+                  animation: `floatShape 8s ease-in-out infinite`,
+                  animationDelay: shape.delay,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="container relative z-10">
           <motion.div
             className="text-center max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 40 }}
@@ -1087,7 +1129,7 @@ export default function ServicesChatbot() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">最短4週間。70% → 90% → 本番へ。</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">2~4週間でのスムーズな導入</h2>
               <p className="mt-3 text-base text-foreground/70">
                 現場の業務を止めずに導入。受け入れ基準も明確にし、安心感を持って本番運用へ移行できます。
               </p>
@@ -1100,18 +1142,28 @@ export default function ServicesChatbot() {
           </motion.div>
           <div className="mt-10 grid gap-8 md:grid-cols-3">
             {timeline.map((item, index) => (
-              <motion.div
-                key={item.phase}
-                className="rounded-3xl border border-border bg-card/60 p-6 shadow-sm"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <p className="text-xs uppercase tracking-[0.4em] text-primary/70">{item.phase}</p>
-                <h3 className="mt-3 text-xl font-semibold text-foreground">{item.title}</h3>
-                <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{item.description}</p>
-              </motion.div>
+              <div key={item.phase} className="relative">
+                <motion.div
+                  className="relative rounded-3xl border border-border bg-card/60 p-6 shadow-sm"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                >
+                  <div className="mb-4 flex justify-center">
+                    <img src={item.image} alt={`${item.title}のイメージ`} className="h-24 object-contain" />
+                  </div>
+                  <p className="text-xs uppercase tracking-[0.4em] text-primary/70">{item.phase}</p>
+                  <h3 className="mt-3 text-xl font-semibold text-foreground">{item.title}</h3>
+                  <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{item.description}</p>
+                  {index < timeline.length - 1 && (
+                    <ArrowRight className="hidden md:block absolute top-1/2 -right-5 h-8 w-8 -translate-y-1/2 text-primary/60" />
+                  )}
+                </motion.div>
+                {index < timeline.length - 1 && (
+                  <ArrowDown className="md:hidden mx-auto mt-4 h-8 w-8 text-primary/60" />
+                )}
+              </div>
             ))}
           </div>
         </div>
