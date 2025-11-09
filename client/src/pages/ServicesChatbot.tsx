@@ -1,68 +1,50 @@
 import { Button } from "@/components/ui/button";
+import type { LucideIcon } from "lucide-react";
 import {
   ArrowLeft,
   ArrowRight,
+  Brain,
   CheckCircle,
   ClipboardList,
   Globe,
+  Layers,
+  Loader2,
   Lock,
   Menu,
   MessageCircle,
+  Repeat2,
+  ShieldCheck,
   Slack,
   X,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 
 const painPoints = [
   {
     title: "データを整理して初期構築する手間が大きく、着手できない",
+    image: "/lpkadai1.PNG",
   },
   {
-    title: "AIが誤った回答をしたら責任を取れず、導入に踏み切れない",
+    title: "AIが誤った回答をしたら責任を負えず、導入に踏み切れない",
+    image: "/lpkadai2.PNG",
   },
   {
     title: "チャットボットの文言を直したいのに、エンジニアに依頼しないと変えられない",
+    image: "/lpkadai3.PNG",
   },
   {
-    title: "社内データがAIの学習に使われないのか、セキュリティ的に不安...",
+    title: "社内データがAIの学習に使われないのか、セキュリティ的に不安…",
+    image: "/lpkadai4.PNG",
   },
 ];
 
 const coreHighlights = [
-  {
-    title: "ゼロ推測の厳密設計",
-    description: (
-      <>
-        <span className="font-semibold text-foreground">登録済みナレッジの範囲外では回答しない構成</span>で、推測や誤案内を<span className="font-semibold text-foreground">徹底的に排除</span>します。
-      </>
-    ),
-  },
-  {
-    title: "答えられない質問が届きます",
-    description: (
-      <>
-        AIが答えられなかった質問は<span className="font-semibold text-foreground">即座にダッシュボードに集約</span>。<span className="font-semibold text-foreground">対応漏れを防ぎます</span>。
-      </>
-    ),
-  },
-  {
-    title: "質問に答えるとAIの学習データに",
-    description: (
-      <>
-        担当者が届いた質問を開いて回答・登録すると、<span className="font-semibold text-foreground">その瞬間にAIの回答範囲へ追加</span>されます。
-      </>
-    ),
-  },
-  {
-    title: "リアルタイム編集で常に最新",
-    description: (
-      <>
-        データの追加・修正は<span className="font-semibold text-foreground">ノーコードで完結</span>。期日付きの案内も<span className="font-semibold text-foreground">即時に更新可能</span>です。
-      </>
-    ),
-  },
+  { title: "ゼロ推測で誤回答を防ぐ" },
+  { title: "答えられなかった質問が管理画面に届く" },
+  { title: "自動で学習データに追加" },
+  { title: "一度学習させたデータもノーコードで更新" },
 ];
 
 const knowledgeSteps = [
@@ -78,13 +60,6 @@ const knowledgeSteps = [
     title: "資産化",
     description: "承認後は全チャネルへ即反映。履歴と出典が紐づき、再利用率と一次回答率が向上します。",
   },
-];
-
-const editHighlights = [
-  "ノーコード編集で誰でも更新可能",
-  "承認完了で全チャネルへ即時反映",
-  "履歴・差分管理で安全にロールバック",
-  "予約公開で期日に合わせた更新も簡単",
 ];
 
 const timeline = [
@@ -234,10 +209,37 @@ const formInitialState = {
 };
 
 const heroStatImages = [
-  { src: "/95%25+.png", alt: "95%以上の正答率" },
-  { src: "/sokuji.png", alt: "即時の回答スピード" },
-  { src: "/2~4weeks.png", alt: "導入期間は2〜4週間" },
-  { src: "/getugaku.png", alt: "月額制 業界最安級" },
+  { src: "/95%25+.PNG", alt: "95%以上の正答率" },
+  { src: "/sokuji.PNG", alt: "即時の回答スピード" },
+  { src: "/2~4weeks.PNG", alt: "導入期間は2〜4週間" },
+  { src: "/getugaku.PNG", alt: "月額制 業界最安級" },
+];
+
+const exclusiveStrengths: Array<{
+  title: string;
+  image: string;
+  icon: LucideIcon;
+}> = [
+  {
+    title: 'Chatbotが"育つ"仕組み',
+    image: "/tuyomi1.PNG",
+    icon: Repeat2,
+  },
+  {
+    title: "エンジニア不要で低価格",
+    image: "/tuyomi2.PNG",
+    icon: ShieldCheck,
+  },
+  {
+    title: "初期構築不要",
+    image: "/tuyomi3.PNG",
+    icon: Layers,
+  },
+  {
+    title: "独自のデータ処理でハイパフォーマンス",
+    image: "/tuyomi4.PNG",
+    icon: Brain,
+  },
 ];
 
 export default function ServicesChatbot() {
@@ -246,10 +248,110 @@ export default function ServicesChatbot() {
   const [hasMoreHighlights, setHasMoreHighlights] = useState(true);
   const highlightScrollRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState(formInitialState);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  type ChatMessage = { id: string; role: "user" | "bot"; text: string; timestamp: string };
+
+  const formatTime = () => {
+    const date = new Date();
+    return date.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" });
+  };
+
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
+    {
+      id: "welcome",
+      role: "bot",
+      text: "MiToAへのご質問をどうぞ。よくある質問やサービス概要をすぐにご案内します。",
+      timestamp: formatTime(),
+    },
+  ]);
+  const [chatInput, setChatInput] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const chatScrollRef = useRef<HTMLDivElement>(null);
+  const messageIdRef = useRef(0);
+
+  const nextMessageId = useCallback(() => {
+    messageIdRef.current += 1;
+    return `msg-${messageIdRef.current}`;
+  }, []);
+
+  const toggleChat = () => setIsChatOpen((prev) => !prev);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
+  useEffect(() => {
+    if (!isChatOpen) return;
+    const container = chatScrollRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [chatMessages, isChatOpen]);
+
+  const sendChatMessage = useCallback(async () => {
+    const trimmed = chatInput.trim();
+    if (!trimmed || isSending) return;
+
+    const userMessage: ChatMessage = {
+      id: nextMessageId(),
+      role: "user",
+      text: trimmed,
+      timestamp: formatTime(),
+    };
+    setChatMessages((prev) => [...prev, userMessage]);
+    setChatInput("");
+    setIsSending(true);
+
+    try {
+      const response = await fetch("https://api-mebo.dev/api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          api_key: "19b7d84e-5d9a-499c-a863-63383c2663dd19a4c7d4656107", // TODO: 本番運用ではサーバー経由で秘匿する
+          agent_id: "2961509b-b7b7-477e-aa23-13ee239f236419a4a3b08fb2fe",
+          utterance: trimmed,
+          uid: "mitoa_lp_widget",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`MiToA chatbot request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      const replyText =
+        data?.bestResponse?.utterance ??
+        data?.utterance ??
+        "申し訳ありません。回答を取得できませんでした。";
+
+      setChatMessages((prev) => [
+        ...prev,
+        { id: nextMessageId(), role: "bot", text: replyText, timestamp: formatTime() },
+      ]);
+    } catch (error) {
+      console.error(error);
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          id: nextMessageId(),
+          role: "bot",
+          text: "通信エラーが発生しました。時間をおいて再度お試しください。",
+          timestamp: formatTime(),
+        },
+      ]);
+    } finally {
+      setIsSending(false);
+    }
+  }, [chatInput, isSending, nextMessageId]);
+
+  const handleChatSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    void sendChatMessage();
   };
 
   useEffect(() => {
@@ -314,7 +416,7 @@ export default function ServicesChatbot() {
     <div className="min-h-screen bg-background">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b border-border bg-white/90 backdrop-blur">
-        <div className="py-2 flex items-center justify-between pl-0 pr-4 md:pr-8">
+        <div className="py-1 flex items-center justify-between pl-0 pr-4 md:pr-8">
           <Link href="/" className="flex items-center gap-2">
             <img src="/logo.png" alt="MiToA" className="h-20 md:h-32 w-auto ml-4 md:ml-6" />
           </Link>
@@ -334,12 +436,19 @@ export default function ServicesChatbot() {
             </div>
             <div className="flex items-center gap-4">
               <Link href="/contact">
-                <Button variant="outline" size="sm" className="px-5 py-2 border-2 border-primary text-sm font-semibold shadow-sm hover:shadow-md hover:-translate-y-0.5 transition">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="group relative overflow-hidden rounded-md border-2 border-primary/80 px-7 py-3 text-sm md:text-base font-semibold text-primary shadow-[0_0_14px_rgba(59,130,246,0.25)] transition-all duration-300 hover:border-primary hover:shadow-[0_0_26px_rgba(59,130,246,0.45)] hover:-translate-y-0.5"
+                >
                   無料で相談する
                 </Button>
               </Link>
               <Link href="/contact">
-                <Button size="sm" className="px-5 py-2 bg-primary text-sm font-semibold shadow-lg hover:bg-primary/80 hover:shadow-xl hover:-translate-y-0.5 transition">
+                <Button
+                  size="lg"
+                  className="relative overflow-hidden rounded-md bg-primary px-7 py-3 text-sm md:text-base font-semibold text-white shadow-[0_0_24px_rgba(59,130,246,0.55)] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_38px_rgba(59,130,246,0.7)] hover:-translate-y-0.5"
+                >
                   資料ダウンロード
                 </Button>
               </Link>
@@ -444,7 +553,7 @@ export default function ServicesChatbot() {
                   AIチャットボット運用プラットフォーム
                 </p>
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-foreground">
-                  推測ゼロ。
+                  エンジニア不要。
                   <br />
                   知識が育つ。
                   <br />
@@ -459,13 +568,22 @@ export default function ServicesChatbot() {
                 viewport={{ once: true }}
               >
                 <Link href="/contact">
-                  <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg px-10 py-7 border-[3px] border-primary hover:bg-primary/10 shadow-md hover:shadow-xl transition">
-                    無料で相談する
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="group relative w-full sm:w-auto overflow-hidden rounded-md border-[3px] border-primary/80 px-10 py-7 text-lg font-semibold text-primary shadow-[0_0_20px_rgba(56,189,248,0.25)] transition-all duration-300 hover:bg-primary/5 hover:shadow-[0_0_36px_rgba(56,189,248,0.45)] hover:-translate-y-1"
+                  >
+                    <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20 opacity-0 transition group-hover:opacity-100" />
+                    <span className="relative tracking-[0.08em]">無料で相談する</span>
                   </Button>
                 </Link>
                 <Link href="/contact">
-                  <Button size="lg" className="w-full sm:w-auto text-lg px-10 py-7 bg-primary hover:bg-primary/90 shadow-xl hover:shadow-2xl transition">
-                    資料ダウンロード
+                  <Button
+                    size="lg"
+                    className="group relative w-full sm:w-auto overflow-hidden rounded-md bg-gradient-to-r from-primary via-sky-500 to-cyan-400 px-10 py-7 text-lg font-semibold text-white shadow-[0_0_36px_rgba(56,189,248,0.55)] transition-all duration-300 hover:shadow-[0_0_50px_rgba(56,189,248,0.75)] hover:-translate-y-1"
+                  >
+                    <span className="pointer-events-none absolute inset-0 bg-white/15 opacity-0 transition group-hover:opacity-30" />
+                    <span className="relative tracking-[0.12em] uppercase">資料ダウンロード</span>
                   </Button>
                 </Link>
               </motion.div>
@@ -488,80 +606,168 @@ export default function ServicesChatbot() {
                 </div>
               ))}
             </div>
-            <p className="text-center mt-8 text-sm text-foreground/60">
-              推測ゼロの厳密設計で、誤回答リスクを徹底排除
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Pain Points */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-50 via-white to-blue-100">
-        <div className="container">
+      {/* Exclusive Strengths */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-cyan-400 via-sky-500 to-blue-500 py-20 md:py-28">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-10 h-32 w-32 rounded-full border-4 border-white" />
+          <div className="absolute bottom-20 left-10 h-24 w-24 rotate-45 border-4 border-white" />
+          <div className="absolute top-1/3 left-1/4 h-16 w-16 rounded-full bg-white" />
+          <div className="absolute bottom-1/4 right-1/3 h-20 w-20 rotate-12 border-4 border-white" />
+        </div>
+
+        <div className="container relative z-10">
           <motion.div
-            className="text-center space-y-3"
+            className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground">チャットボットを導入したいけど...</h2>
-            <p className="text-base md:text-lg text-foreground/70">
-              こんな課題を抱えていませんか？
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              MiToAが選ばれる3つの理由
+            </h2>
+            <div className="mt-4 mx-auto w-16 h-1 bg-yellow-300"></div>
           </motion.div>
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {/* Reason 1 */}
+            <motion.div
+              className="relative group"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              <div className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                <div className="mb-4 flex justify-center">
+                  <img
+                    src="/tuyomi1.PNG"
+                    alt="成長する仕組み"
+                    className="w-full max-w-[200px] rounded-2xl shadow-lg"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight min-h-[120px]">
+                    Chatbotが<span className="text-yellow-500">"育つ"</span>仕組み<br />運用しながら賢くなる
+                  </h3>
+                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
+                    届いた質問に答えるだけでChatbotが賢くなる仕組み。
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Reason 2 */}
+            <motion.div
+              className="relative group"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              <div className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                <div className="mb-4 flex justify-center">
+                  <img
+                    src="/tuyomi2.PNG"
+                    alt="低価格で導入"
+                    className="w-full max-w-[200px] rounded-2xl shadow-lg"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
+                    エンジニア不要で<span className="text-yellow-500">低価格</span>。
+                  </h3>
+                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
+                    自分たちで育てる仕組みだからこそ、導入後のエンジニアとの連携不要で時間・価格が抑えられる
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Reason 3 */}
+            <motion.div
+              className="relative group"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true, margin: "-50px" }}
+            >
+              <div className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                <div className="mb-4 flex justify-center">
+                  <img
+                    src="/tuyomi4.PNG"
+                    alt="データ処理技術"
+                    className="w-full max-w-[200px] rounded-2xl shadow-lg"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
+                    独自のデータ処理で<br />正答率<span className="text-yellow-500">90%以上</span>を実現
+                  </h3>
+                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
+                    性能に大きく関わる初期設計・構築は専門家にお任せ。
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pain Points */}
+      <section className="py-20 md:py-28 bg-gradient-to-b from-white via-blue-50/40 to-white">
+        <div className="container">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <p className="text-xs uppercase tracking-[0.45em] text-primary/70">Pain Points</p>
+            <h2 className="mt-3 text-3xl md:text-5xl font-bold text-foreground">
+              こんな不安もMiToAが解消します。
+            </h2>
+            <p className="mt-4 text-sm md:text-base text-foreground/60">
+              チャットボットの導入・運用の面倒・不安は一切ございません！
+            </p>
+            <div
+              className="mx-auto mt-6 h-1 w-24 bg-gradient-to-r from-primary via-sky-500 to-cyan-400"
+              style={{ backgroundSize: "160% 100%" }}
+            />
+          </motion.div>
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {painPoints.map((point, index) => (
               <motion.div
                 key={point.title}
-                className="rounded-3xl border border-border bg-white px-8 py-10 text-center"
+                className="flex flex-col items-center rounded-[2rem] border border-slate-100 bg-white px-8 py-12 text-center shadow-[0_20px_50px_rgba(15,23,42,0.1)]"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
                 viewport={{ once: true, margin: "-100px" }}
               >
-                <p className="text-xl font-bold text-foreground whitespace-pre-line leading-relaxed">
+                <img
+                  src={point.image}
+                  alt={`${point.title}をイメージした図`}
+                  className="mb-8 h-40 w-auto object-contain"
+                />
+                <p className="text-lg md:text-xl font-semibold leading-relaxed text-foreground">
                   {point.title}
                 </p>
               </motion.div>
             ))}
           </div>
-          <motion.div
-            className="mt-10 flex justify-center"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <motion.img
-              src="/nayamibito.PNG"
-              alt="悩む人のイラスト"
-              className="w-full"
-              style={{ maxWidth: '16rem' }}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.25 }}
-              viewport={{ once: true, margin: "-120px" }}
-            />
-          </motion.div>
         </div>
       </section>
 
       {/* MiToA Solution & Core Highlights - Combined Section */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 overflow-hidden">
+      <section className="py-8 md:py-12 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 overflow-hidden">
         <div className="container">
-          {/* Title Section */}
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <p className="text-xs uppercase tracking-[0.4em] text-blue-300">MiToA Chatbot Studio</p>
-            <h2 className="mt-4 text-3xl md:text-4xl font-bold text-white">MiToAがこのお悩みを解決します</h2>
-          </motion.div>
-
           {/* White Card Container */}
           <motion.div
             className="relative mx-auto w-full max-w-6xl rounded-3xl bg-white p-8 md:p-12 shadow-2xl border-4 border-blue-200"
@@ -571,19 +777,23 @@ export default function ServicesChatbot() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div
-              className="text-center mb-14"
+              className="text-center mb-4"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
               viewport={{ once: true, margin: "-120px" }}
             >
-              <p className="text-4xl md:text-5xl font-extrabold uppercase leading-none text-primary/20" style={{ letterSpacing: "0.08em" }}>
+              <p
+                className="text-5xl md:text-6xl font-extrabold uppercase leading-none text-primary/20"
+                style={{ letterSpacing: "0.12em" }}
+              >
                 MiToA VALUE
               </p>
-              <h3 className="-mt-4 md:-mt-5 text-2xl md:text-3xl font-bold text-foreground">MiToAチャットボットのコア価値</h3>
-              <p className="mt-4 text-lg md:text-xl text-foreground/70">
-                運用モデルそのものが差別化ポイント。誤回答リスクのない「ゼロ推測運用」で安心して任せられます。
-              </p>
+              <h3 className="-mt-5 md:-mt-6 text-3xl md:text-4xl font-bold text-foreground">MiToAチャットボットのコア価値</h3>
+              <div
+                className="mx-auto mt-3 h-1 w-28 md:w-44 bg-gradient-to-r from-blue-900 via-lime-400 to-cyan-400"
+                style={{ backgroundSize: "200% 100%" }}
+              />
             </motion.div>
             <div className="relative">
               <motion.div
@@ -615,93 +825,91 @@ export default function ServicesChatbot() {
                       >
                         <p className="text-sm text-primary/70 uppercase tracking-[0.3em]">Value {String(index + 1).padStart(2, "0")}</p>
                         <h3 className="mt-4 text-2xl md:text-3xl font-semibold text-foreground">{item.title}</h3>
-                        <p className="mt-4 text-base md:text-lg text-foreground/70 leading-relaxed">{item.description}</p>
                         {index === 0 && (
-                          <>
-                            <div className="mt-8 grid gap-6 md:grid-cols-2">
-                              <div className="rounded-2xl border border-border bg-white p-4">
+                          <div className="mt-8 space-y-6">
+                            <div className="grid gap-6 md:grid-cols-2">
+                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-white/60">
                                 <img
                                   src="/with-knowledge.png"
                                   alt="登録ナレッジ内での回答イメージ"
-                                  className="w-full rounded-xl border border-white/60 shadow-sm"
+                                  className="mx-auto h-48 w-auto object-contain"
                                 />
-                                <p className="mt-3 text-base md:text-lg text-foreground/70 leading-relaxed">
-                                  登録済みナレッジに一致した場合のみ回答。根拠情報も合わせて提示し、信頼性を担保します。
+                                <p className="mt-4 text-xl font-semibold text-foreground text-center md:text-left leading-relaxed">
+                                  知識がある場合は正しく答える
                                 </p>
                               </div>
-                              <div className="rounded-2xl border border-border bg-white p-4">
+                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-white/60">
                                 <img
                                   src="/non-knowledge.png"
                                   alt="未登録ナレッジ時のフォールバックイメージ"
-                                  className="w-full rounded-xl border border-white/40 shadow-sm"
+                                  className="mx-auto h-48 w-auto object-contain"
                                 />
-                                <p className="mt-3 text-base md:text-lg text-foreground/70 leading-relaxed">
-                                  一致しない場合はフォールバックを提示して、担当者へ引き継ぎ。推測や誤案内を防止します。
+                                <p className="mt-4 text-xl font-semibold text-foreground text-center md:text-left leading-relaxed">
+                                  知識がない場合は「分からない」
                                 </p>
                               </div>
                             </div>
-                            <div className="mt-8 text-center">
-                              <p className="text-base md:text-lg text-foreground/80 leading-relaxed max-w-4xl mx-auto">
-                                ナレッジにあるデータについての質問には<span className="font-semibold text-foreground">正しく素早く回答</span>し、ナレッジにないデータについての質問には<span className="font-semibold text-foreground">はっきりと「分からない」と答える</span>仕組みで、誤った情報を伝えるのを防ぎます。
-                              </p>
-                            </div>
-                          </>
+                            <p className="text-center text-2xl md:text-3xl font-bold px-6 leading-relaxed">
+                              <span className="text-foreground">推測で答えず、</span>
+                              <span className="bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">
+                                分からない質問は「分からない」
+                              </span>
+                              <span className="text-foreground">と答える。</span>
+                            </p>
+                          </div>
                         )}
                         {index === 1 && (
                           <div className="mt-8 flex flex-col items-center">
-                            <div className="w-full max-w-md">
+                            <div className="h-72 flex items-center justify-center mb-6">
                               <img
-                                src="/kanrigamenvalue.png"
+                                src="/value02.png"
                                 alt="未回答が管理画面に届くイメージ"
-                                className="w-full mt-16 mb-8 scale-100 md:scale-150"
+                                className="max-h-full max-w-full object-contain"
                               />
                             </div>
-                            <p className="text-base md:text-lg text-foreground/70 leading-relaxed mt-20 w-full max-w-4xl px-4">
-                              未回答はすべて<span className="font-semibold text-foreground">管理画面に自動で集約</span>。担当者は<span className="font-semibold text-foreground">管理画面を開くだけ</span>で、優先度の高いものから順に処理できます。
+                            <p className="text-center text-2xl md:text-3xl font-bold px-6 leading-relaxed">
+                              <span className="text-foreground">チャットボットの</span>
+                              <span className="bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">「分からない」が集まる</span>
                             </p>
                           </div>
                         )}
                         {index === 2 && (
                           <div className="mt-8 flex flex-col items-center">
-                            <div className="w-full max-w-md">
+                            <div className="h-72 flex items-center justify-center mb-6">
                               <img
                                 src="/value03.png"
-                                alt="1行追記で即ナレッジ化のイメージ"
-                                className="w-full mt-16 mb-8 scale-100 md:scale-150"
+                                alt="補助機能で回答を作成するイメージ"
+                                className="max-h-full max-w-full object-contain"
                               />
                             </div>
-                            <p className="text-base md:text-lg text-foreground/70 leading-relaxed mt-20 w-full max-w-4xl px-4">
-                              下書き保存によるダブルチェック、AIで回答作成機能、要約・誤字修正機能など<span className="font-semibold text-foreground">様々な便利機能付き！</span>
+                            <p className="text-center text-2xl md:text-3xl font-bold text-foreground px-6 leading-relaxed">
+                              届いた質問に答えるだけで
+                              <span className="bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">
+                                チャットボットが育ちます
+                              </span>
+                              。
                             </p>
                           </div>
                         )}
                         {index === 3 && (
-                          <div className="mt-8 flex justify-center">
-                            <div className="w-full max-w-3xl">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-                                <div>
-                                  <img
-                                    src="/value04_1.png"
-                                    alt="リアルタイム編集で常に最新のイメージ1"
-                                    className="w-full mb-8"
-                                  />
-                                </div>
-                                <div>
-                                  <img
-                                    src="/value04_2.png"
-                                    alt="リアルタイム編集で常に最新のイメージ2"
-                                    className="w-full mb-8"
-                                  />
-                                </div>
-                              </div>
-                              <p className="text-base md:text-lg text-foreground/70 leading-relaxed mt-12">
-                                データの追加・修正は<span className="font-semibold text-foreground">ノーコードで完結</span>。期日付きの案内も<span className="font-semibold text-foreground">即時に更新可能</span>です。
-                              </p>
+                          <div className="mt-8 flex flex-col items-center">
+                            <div className="h-72 flex items-center justify-center mb-6">
+                              <img
+                                src="/value04.png"
+                                alt="ノーコードで即時更新のイメージ"
+                                className="max-h-full max-w-full object-contain rounded-2xl border border-white/60 shadow-sm"
+                              />
                             </div>
+                            <p className="text-center text-2xl md:text-3xl font-bold px-6 leading-relaxed">
+                              <span className="text-foreground">データ編集で</span>
+                              <span className="bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">
+                                変更データを即反映
+                              </span>
+                            </p>
                           </div>
                         )}
                       </motion.div>
-                      <div className="mt-10 h-1 w-24 rounded-full bg-primary/30" />
+                      <div className="mt-4 h-1 w-24 rounded-full bg-primary/30" />
                     </div>
                   </div>
                 </motion.div>
@@ -736,7 +944,7 @@ export default function ServicesChatbot() {
                 </motion.button>
               )}
             </div>
-            <div className="mt-10 flex justify-center gap-2">
+            <div className="mt-4 flex justify-center gap-2">
               {coreHighlights.map((_, index) => (
                 <span
                   key={index}
@@ -760,7 +968,11 @@ export default function ServicesChatbot() {
             transition={{ duration: 0.7, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">属人化した知識を会社の資産に変える仕組み。</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">点在するナレッジを、循環する企業資産へ</h2>
+            <div
+              className="mx-auto mt-4 h-1 w-44 md:w-72 bg-gradient-to-r from-blue-900 via-lime-400 to-cyan-400"
+              style={{ backgroundSize: "200% 100%" }}
+            />
           </motion.div>
 
           <motion.div
@@ -818,7 +1030,7 @@ export default function ServicesChatbot() {
               <span className="text-primary/90 inline-block ml-1">資産へと変える。</span>
               {"\n"}
               <span className="text-foreground">それが </span>
-              <span className="bg-gradient-to-r from-primary/80 to-sky-500 bg-clip-text text-transparent text-3xl md:text-4xl align-middle">MiToA のチャットボット</span>
+              <span className="bg-gradient-to-r from-primary/80 to-sky-500 bg-clip-text text-transparent text-3xl md:text-4xl align-baseline">MiToA のチャットボット</span>
               <span className="text-foreground">です。</span>
             </p>
           </motion.div>
@@ -826,62 +1038,39 @@ export default function ServicesChatbot() {
       </section>
 
 
-      {/* Editing Highlights */}
-      <section className="py-16 md:py-24 bg-card/50">
+      {/* Integrations */}
+      <section className="pt-14 pb-4 md:pt-20 md:pb-6 bg-card/60">
         <div className="container">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">現場で即更新。今日の情報が、今日の正解になる。</h2>
-              <p className="mt-4 text-base text-foreground/70">
-                ノーコード編集で担当者がその場で更新。承認後は即全チャネルへ反映され、履歴やロールバック機能で安心して運用できます。
-              </p>
-              <ul className="mt-6 space-y-3 text-sm text-foreground/80">
-                {editHighlights.map((text, index) => (
-                  <motion.li
-                    key={text}
-                    className="flex items-start gap-3"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 * index }}
-                    viewport={{ once: true, margin: "-120px" }}
-                  >
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                    <span>{text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
-                viewport={{ once: true, margin: "-120px" }}
-              >
-                <Link href="/contact">
-                  <Button className="mt-8 gap-2">
-                    更新デモを見る <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </motion.div>
-            </motion.div>
-            <motion.div
-              className="rounded-3xl border border-border bg-background p-6 shadow-sm"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <h3 className="text-lg font-semibold text-foreground">具体例：履修期間の更新</h3>
-              <p className="mt-3 text-sm text-foreground/70 leading-relaxed">
-                春学期→秋学期の履修期間を即更新。承認後は Slack・LINE・Web の全チャネルに同時反映され、問い合わせがゼロに。
-                履歴と通知で関係者にも共有されます。
-              </p>
-            </motion.div>
-          </div>
+          <motion.div
+            className="max-w-3xl mx-auto text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">様々な既存ツールと連携可能</h2>
+            <div
+              className="mx-auto mt-4 h-1 w-32 md:w-56 bg-gradient-to-r from-blue-900 via-lime-400 to-cyan-400"
+              style={{ backgroundSize: "200% 100%" }}
+            />
+            <p className="mt-6 text-base md:text-lg text-foreground/70 leading-relaxed">
+              Slack や LINE、社内ポータル、既存の業務システムまで。同じナレッジをそのまま API 連携し、部署ごとに必要なチャネルへ展開できます。
+            </p>
+          </motion.div>
+          <motion.div
+            className="mt-10 md:mt-12"
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <img
+              src="/renkei2.PNG"
+              alt="既存ツールとの連携イメージ"
+              className="w-full max-w-2xl mx-auto object-contain transition-transform duration-300 hover:scale-105 cursor-pointer"
+              style={{ clipPath: 'inset(0 0 10% 0)' }}
+            />
+          </motion.div>
         </div>
       </section>
 
@@ -920,21 +1109,6 @@ export default function ServicesChatbot() {
                 <p className="text-xs uppercase tracking-[0.4em] text-primary/70">{item.phase}</p>
                 <h3 className="mt-3 text-xl font-semibold text-foreground">{item.title}</h3>
                 <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-4 text-sm text-foreground/70">
-            {["回答率", "フォールバック率", "根拠提示率", "推測ゼロ"].map((criterion, index) => (
-              <motion.div
-                key={criterion}
-                className="rounded-2xl border border-primary/20 bg-primary/5 p-4 text-center"
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 + index * 0.1 }}
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <p className="text-xs uppercase tracking-[0.4em] text-primary/70">受け入れ基準</p>
-                <p className="mt-2 text-base font-semibold text-foreground">{criterion}</p>
               </motion.div>
             ))}
           </div>
@@ -1421,6 +1595,115 @@ export default function ServicesChatbot() {
           </div>
         </div>
       </footer>
+
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3">
+        {isChatOpen && (
+          <div className="w-[320px] md:w-[380px] rounded-[28px] border border-slate-200 bg-white shadow-[0_30px_60px_rgba(15,23,42,0.18)] overflow-hidden">
+            <div className="flex items-center justify-between bg-gradient-to-r from-primary via-sky-500 to-cyan-400 px-5 py-4 text-white">
+              <div className="flex items-center gap-3 text-sm font-semibold">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/60 bg-white/30 shadow-inner">
+                  <img src="/chatboticon.png" alt="チャットボットアイコン" className="h-7 w-7 rounded-full object-cover object-center" />
+                </div>
+                <span className="text-base font-semibold tracking-wide">MiToA Chatbot</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsChatOpen(false)}
+                className="rounded-full bg-white/10 p-1 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                aria-label="チャットを閉じる"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <div className="flex h-[420px] flex-col bg-slate-50">
+              <div
+                ref={chatScrollRef}
+                className="flex-1 overflow-y-auto px-5 py-5 space-y-4 scrollbar-thin scrollbar-thumb-primary/40 scrollbar-track-transparent"
+              >
+                {chatMessages.map((message) => {
+                  const isBot = message.role === "bot";
+                  if (isBot) {
+                    return (
+                      <div key={message.id} className="flex w-full justify-start">
+                        <div className="flex items-start gap-3">
+                          <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white shadow-sm overflow-hidden">
+                            <img src="/chatboticon.png" alt="MiToA" className="h-full w-full object-cover" />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                        <div className="max-w-[230px] rounded-[22px] border border-slate-200 bg-white px-5 py-3 shadow-sm">
+                              <p className="text-sm leading-relaxed text-slate-700 break-words">{message.text}</p>
+                            </div>
+                            <span className="text-[11px] text-slate-400">{message.timestamp}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div key={message.id} className="flex w-full justify-end">
+                      <div className="flex max-w-[80%] flex-col items-end gap-1">
+                        <div className="max-w-[230px] rounded-[24px] bg-[#25D366] px-5 py-3 text-sm leading-relaxed text-white shadow-sm">
+                          <span className="break-words">{message.text}</span>
+                        </div>
+                        <span className="text-[11px] text-slate-400">{message.timestamp}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+                {isSending && (
+                  <div className="flex justify-start">
+                    <div className="flex items-center gap-2 rounded-[20px] border border-slate-200 bg-white px-3 py-2 text-xs text-slate-500 shadow-sm">
+                      <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                      <span>回答を生成しています...</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <form
+                onSubmit={handleChatSubmit}
+                className="border-t border-primary/10 bg-white px-3 py-2"
+              >
+                <div className="flex items-center gap-2">
+                  <input
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    placeholder="ご質問を入力してください"
+                    className="flex-1 rounded-full border border-primary/20 bg-white px-3 py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/40"
+                    disabled={isSending}
+                  />
+                  <button
+                    type="submit"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:bg-primary/50"
+                    disabled={isSending || !chatInput.trim()}
+                    aria-label="メッセージを送信"
+                  >
+                    {isSending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <ArrowRight className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+        {!isChatOpen && (
+          <button
+            type="button"
+            onClick={() => setIsChatOpen(true)}
+            className="group relative h-40 w-48 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            aria-label="MiToAにについて質問する"
+          >
+            <img
+              src="/migisita.PNG"
+              alt="チャットを開く"
+              className="h-full w-full object-contain transition duration-200 group-hover:scale-105 group-hover:drop-shadow-[0_0_20px_rgba(56,189,248,0.4)]"
+            />
+          </button>
+        )}
+      </div>
     </div>
   );
 }
