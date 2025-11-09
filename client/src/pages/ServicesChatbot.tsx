@@ -644,11 +644,11 @@ export default function ServicesChatbot() {
               viewport={{ once: true, margin: "-50px" }}
             >
               <div className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                <div className="mb-4 flex justify-center">
+                <div className="mb-4 flex justify-center items-center min-h-[220px]">
                   <img
                     src="/tuyomi1.PNG"
                     alt="成長する仕組み"
-                    className="w-full max-w-[200px] rounded-2xl shadow-lg"
+                    className="w-full max-w-[200px] object-contain"
                   />
                 </div>
                 <div className="flex-1">
@@ -671,11 +671,11 @@ export default function ServicesChatbot() {
               viewport={{ once: true, margin: "-50px" }}
             >
               <div className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                <div className="mb-4 flex justify-center">
+                <div className="mb-4 flex justify-center items-center min-h-[220px]">
                   <img
                     src="/tuyomi2.PNG"
                     alt="低価格で導入"
-                    className="w-full max-w-[200px] rounded-2xl shadow-lg"
+                    className="w-full max-w-[200px] object-contain"
                   />
                 </div>
                 <div className="flex-1">
@@ -698,11 +698,11 @@ export default function ServicesChatbot() {
               viewport={{ once: true, margin: "-50px" }}
             >
               <div className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                <div className="mb-4 flex justify-center">
+                <div className="mb-4 flex justify-center items-center min-h-[220px]">
                   <img
                     src="/tuyomi4.PNG"
                     alt="データ処理技術"
-                    className="w-full max-w-[200px] rounded-2xl shadow-lg"
+                    className="w-full max-w-[200px] object-contain"
                   />
                 </div>
                 <div className="flex-1">
