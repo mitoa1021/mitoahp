@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { ArrowRight, Sparkles, Clock, Settings, Zap, TrendingUp, Users, Menu, X } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 export default function Home() {
+  useDocumentTitle();
   const videoRef = useRef<HTMLVideoElement>(null);
   const directionRef = useRef(1); // 1 for forward, -1 for backward
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowLeft,
@@ -243,6 +244,7 @@ const exclusiveStrengths: Array<{
 ];
 
 export default function ServicesChatbot() {
+  useDocumentTitle(import.meta.env.VITE_APP_LP_TITLE);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeHighlightIndex, setActiveHighlightIndex] = useState(0);
   const [hasMoreHighlights, setHasMoreHighlights] = useState(true);
