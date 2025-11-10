@@ -15,6 +15,7 @@ import {
   Menu,
   MessageCircle,
   Repeat2,
+  Shield,
   ShieldCheck,
   Slack,
   X,
@@ -70,20 +71,20 @@ const timeline = [
     title: "当社が初期モデルを構築",
     description:
       "要件整理と資料受領で初期モデルを構築。資料に加えて当社独自の業界別FAQを組み込み、最適な形にデータを処理し、チャットボットと管理用Webアプリをお渡しします。",
-    image: "/tree1.PNG",
+    image: "/week1.PNG",
   },
   {
     phase: "Week 2–4",
     title: "現場検証で精度向上",
     description:
       "平常業務の中で出てきた質問をチャットボットにそのまま投げるだけでOK。チャットボットが答えられなかったら有識者がWebアプリ上で回答し、\"育つ\"体験を共有します。",
-    image: "/tree2.PNG",
+    image: "/week2.PNG",
   },
   {
     phase: "Week 4〜",
     title: "本番運用スタート",
     description: "リリース可能と判断したら社内外へ公開。毎日の質問を数分で補完し、回答精度を100%へ近づけます。",
-    image: "/tree3.PNG",
+    image: "/week3.PNG",
   },
 ];
 
@@ -152,29 +153,69 @@ const useCases = [
 
 const comparisonRows = [
   {
-    label: "回答方針",
-    ours: "登録データのみ。確信度低はフォールバック提示",
-    others: "外部AI混在で推測回答が発生しやすい",
+    label: "信頼性",
+    ours: {
+      description: "推測ゼロ。「分からない」が成長に繋がる",
+      statLabel: "誤回答率",
+      statValue: "<5%",
+    },
+    others: {
+      description: "AIが勝手に推測して回答。\n間違った情報を提供するリスクあり。",
+      statLabel: "推測回答率",
+      statValue: "15%+",
+    },
   },
   {
-    label: "育成フロー",
-    ours: "未回答自動収集 → 1行回答 → 即学習",
-    others: "CSV更新やエンジニア改修が前提",
+    label: "スピード",
+    ours: {
+      description: "1分で情報の追加や編集が可能",
+      statLabel: "改善リードタイム",
+      statValue: "1営業日",
+    },
+    others: {
+      description: "エンジニアへの依頼が必要。\n改善までに数週間",
+      statLabel: "改善リードタイム",
+      statValue: "2〜4週間",
+    },
   },
   {
-    label: "編集・承認",
-    ours: "ノーコード編集・承認・履歴・予約公開",
-    others: "管理画面が複雑、履歴管理が弱い",
+    label: "使いやすさ",
+    ours: {
+      description: "Webアプリだけで完結。\nノーコードで誰でも簡単。",
+      statLabel: "1回答の編集時間",
+      statValue: "3分",
+    },
+    others: {
+      description: "複雑な管理画面で迷子に。どの情報が最新か分からず、編集や承認に時間がかかります。",
+      statLabel: "1回答の編集時間",
+      statValue: "30分+",
+    },
   },
   {
-    label: "展開チャネル",
-    ours: "Slack / LINE / Web を同一ナレッジで",
-    others: "チャネルごとに別シナリオを構築",
+    label: "柔軟性",
+    ours: {
+      description: "あらゆるワークスペース・公式ライン・WEBページ埋め込みにも対応",
+      statLabel: "同時展開",
+      statValue: "3チャネル標準",
+    },
+    others: {
+      description: "チャネルごとに別々のシナリオ作成が必要。増やすたびに管理工数が倍増し、更新漏れも発生。",
+      statLabel: "管理負荷",
+      statValue: "チャネル数に比例",
+    },
   },
   {
-    label: "価格思想",
-    ours: "登録数無制限。回答量ベースでシンプル",
-    others: "FAQ数やシナリオ数ごとに加算",
+    label: "コスト",
+    ours: {
+      description: "エンジニア不要で業界最安級\n月額19,800〜",
+      statLabel: "初期費用",
+      statValue: "30万円〜",
+    },
+    others: {
+      description: "FAQやシナリオ数で課金。充実させようとすると、あっという間に予算オーバーに。\n月額15万円 ～ 50万円が相場",
+      statLabel: "課金単位",
+      statValue: "FAQ/シナリオ毎",
+    },
   },
 ];
 
@@ -661,10 +702,10 @@ export default function ServicesChatbot() {
                   />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight min-h-[120px]">
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-foreground leading-tight min-h-[120px]">
                     Chatbotが<span className="text-yellow-500">"育つ"</span>仕組み<br />運用しながら賢くなる
                   </h3>
-                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
+                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed mt-4">
                     届いた質問に答えるだけでChatbotが賢くなる仕組み。
                   </p>
                 </div>
@@ -689,7 +730,7 @@ export default function ServicesChatbot() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
-                    エンジニア不要で<br /><span className="text-yellow-500">業界最安級価格</span>。
+                    エンジニア不要で<br /><span className="text-yellow-500">業界最安級価格</span>
                   </h3>
                   <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
                     自分たちで育てる仕組みだからこそ、導入後のエンジニアとの連携不要で時間・価格が抑えられる
@@ -1135,27 +1176,40 @@ export default function ServicesChatbot() {
               </p>
             </div>
             <Link href="/contact">
-              <Button className="gap-2">
-                導入スケジュールを相談 <ArrowRight className="h-4 w-4" />
+              <Button
+                size="lg"
+                className="group relative overflow-hidden rounded-md bg-gradient-to-r from-primary via-sky-500 to-cyan-400 px-10 py-7 text-lg font-semibold text-white shadow-[0_0_36px_rgba(56,189,248,0.55)] transition-all duration-300 hover:shadow-[0_0_50px_rgba(56,189,248,0.75)] hover:-translate-y-1"
+              >
+                <span className="pointer-events-none absolute inset-0 bg-white/15 opacity-0 transition group-hover:opacity-30" />
+                <span className="relative tracking-[0.12em] uppercase flex items-center gap-2">
+                  資料ダウンロード <ArrowRight className="h-5 w-5" />
+                </span>
               </Button>
             </Link>
           </motion.div>
           <div className="mt-10 grid gap-8 md:grid-cols-3">
             {timeline.map((item, index) => (
-              <div key={item.phase} className="relative">
+              <div key={item.phase} className="relative h-full">
                 <motion.div
-                  className="relative rounded-3xl border border-border bg-card/60 p-6 shadow-sm"
+                  className="relative rounded-3xl p-[3px] h-full"
+                  style={{
+                    background: 'linear-gradient(to right, rgb(30, 58, 138), rgb(163, 230, 53), rgb(34, 211, 238))',
+                    backgroundSize: '200% 100%',
+                    animation: 'gradientShift 3s ease infinite'
+                  }}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
                   viewport={{ once: true, margin: "-100px" }}
                 >
-                  <div className="mb-4 flex justify-center">
-                    <img src={item.image} alt={`${item.title}のイメージ`} className="h-24 object-contain" />
+                  <div className="relative rounded-3xl bg-white p-6 shadow-sm h-full flex flex-col">
+                    <div className="mb-4 flex justify-center items-center h-48 md:h-56">
+                      <img src={item.image} alt={`${item.title}のイメージ`} className="max-h-full w-auto object-contain" />
+                    </div>
+                    <p className="text-xs uppercase tracking-[0.4em] text-primary/70">{item.phase}</p>
+                    <h3 className="mt-3 text-xl font-semibold text-foreground">{item.title}</h3>
+                    <p className="mt-3 text-sm text-foreground/70 leading-relaxed flex-1">{item.description}</p>
                   </div>
-                  <p className="text-xs uppercase tracking-[0.4em] text-primary/70">{item.phase}</p>
-                  <h3 className="mt-3 text-xl font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{item.description}</p>
                   {index < timeline.length - 1 && (
                     <ArrowRight className="hidden md:block absolute top-1/2 -right-5 h-8 w-8 -translate-y-1/2 text-primary/60" />
                   )}
@@ -1166,226 +1220,6 @@ export default function ServicesChatbot() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Integrations */}
-      <section className="py-16 md:py-24 bg-card/40">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">連携 & ダッシュボード</h2>
-            <p className="mt-4 max-w-3xl text-base text-foreground/70">
-              利用者が接するチャネルにも、運用担当者がコントロールする管理画面にも「楽さ」を。ダッシュボードで状況を可視化しながら、
-              一括更新とクラスター分析で継続的に改善できます。
-            </p>
-          </motion.div>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <motion.div
-              className="rounded-3xl border border-border bg-background p-6 shadow-sm"
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <h3 className="text-lg font-semibold text-foreground">対応チャネル</h3>
-              <p className="mt-2 text-sm text-foreground/70">同一ナレッジを複数チャネルに展開。利用者は好きな場所で利用できます。</p>
-              <div className="mt-4 space-y-3 text-sm text-foreground/80">
-                {integrations.map(({ icon: Icon, label }, index) => (
-                  <motion.div
-                    key={label}
-                    className="flex items-center gap-3"
-                    initial={{ opacity: 0, x: -15 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 + index * 0.05 }}
-                    viewport={{ once: true, margin: "-120px" }}
-                  >
-                    <Icon className="h-5 w-5 text-primary" />
-                    <span>{label}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-            <motion.div
-              className="rounded-3xl border border-border bg-background p-6 shadow-sm"
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <h3 className="text-lg font-semibold text-foreground">ダッシュボード</h3>
-              <p className="mt-2 text-sm text-foreground/70">現場が求める情報を一目で把握し、改善アクションに移せます。</p>
-              <ul className="mt-4 space-y-3 text-sm text-foreground/80">
-                {dashboardFeatures.map((feature, index) => (
-                  <motion.li
-                    key={feature}
-                    className="flex items-start gap-3"
-                    initial={{ opacity: 0, x: 15 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 + index * 0.05 }}
-                    viewport={{ once: true, margin: "-120px" }}
-                  >
-                    <ClipboardList className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                    <span>{feature}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Security */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container">
-          <motion.div
-            className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                AWSで厳格管理。お客様データは学習に使いません。
-              </h2>
-              <p className="mt-3 text-base text-foreground/70">
-                情報が重要な大学・自治体でも安心して使えるよう、セキュリティポリシーと運用体制を整備しています。
-              </p>
-            </div>
-            <Link href="/contact">
-              <Button className="gap-2">
-                セキュリティ詳細を問い合わせ <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-          </motion.div>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {securityPoints.map((point, index) => (
-              <motion.div
-                key={point}
-                className="rounded-2xl border border-border bg-card/60 p-5 text-sm text-foreground/80"
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.08 }}
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <Lock className="h-5 w-5 text-primary" />
-                <p className="mt-2">{point}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="py-16 md:py-24 bg-card/40">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center">料金プラン</h2>
-            <p className="mt-4 text-base text-foreground/70 text-center">
-              利用規模に応じて選べる 3 プラン。ナレッジ登録数はすべて無制限です。
-            </p>
-          </motion.div>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={plan.name}
-                className="flex h-full flex-col rounded-3xl border border-border bg-background p-6 shadow-sm"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <p className="text-xs uppercase tracking-[0.4em] text-primary/70">{plan.name}</p>
-                <h3 className="mt-3 text-2xl font-semibold text-foreground">{plan.price}</h3>
-                <p className="mt-2 text-sm text-foreground/70">{plan.quota}</p>
-                <ul className="mt-4 space-y-2 text-sm text-foreground/80">
-                  {plan.features.map((feature, featureIndex) => (
-                    <motion.li
-                      key={feature}
-                      className="flex items-start gap-3"
-                      initial={{ opacity: 0, x: -15 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 + featureIndex * 0.05 }}
-                      viewport={{ once: true, margin: "-120px" }}
-                    >
-                      <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                      <span>{feature}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-                <Link href="/contact" className="mt-auto">
-                  <Button className="mt-6 w-full gap-2">
-                    見積を依頼 <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div
-            className="mt-8 space-y-2 text-xs text-foreground/60"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {pricingNotes.map((note) => (
-              <p key={note}>※ {note}</p>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Use Cases */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">利用イメージ</h2>
-            <p className="mt-4 text-base text-foreground/70">
-              実名は出せませんが、導入後にどのような効果が出ているかを具体的なシーンとともに紹介します。
-            </p>
-          </motion.div>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {useCases.map((item, index) => (
-              <motion.div
-                key={item.title}
-                className="rounded-3xl border border-border bg-card/60 p-6 shadow-sm"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <Link href="/contact">
-              <Button className="mt-8 gap-2">
-                自分たちの業務で相談 <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-          </motion.div>
         </div>
       </section>
 
@@ -1403,6 +1237,7 @@ export default function ServicesChatbot() {
               運用モデル・編集性・展開の柔軟さで、MiToAはワンランク上の体験を提供します。
             </p>
           </motion.div>
+
           <motion.div
             className="mt-8 overflow-hidden rounded-3xl border border-border bg-background shadow-sm"
             initial={{ opacity: 0, y: 30 }}
@@ -1410,26 +1245,89 @@ export default function ServicesChatbot() {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <table className="w-full text-left text-sm text-foreground/80">
-              <thead className="bg-card/60 text-foreground">
+            <table className="w-full text-left text-base md:text-lg text-foreground border-collapse">
+              <thead className="bg-gradient-to-r from-blue-50 to-cyan-50 text-foreground">
                 <tr>
-                  <th className="px-6 py-4 font-semibold">観点</th>
-                  <th className="px-6 py-4 font-semibold">MiToA</th>
-                  <th className="px-6 py-4 font-semibold">よくある他社サービス</th>
+                  <th className="px-6 md:px-8 py-5 md:py-6 font-bold text-lg md:text-xl border-r-2 border-border w-1/6 whitespace-nowrap">観点</th>
+                  <th className="px-6 md:px-8 py-5 md:py-6 font-bold border-r-2 border-border">
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl md:text-4xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">MiToA</span>
+                      <img
+                        src="/PC&iPhone.PNG"
+                        alt="MiToA"
+                        className="h-32 md:h-40 w-auto object-contain"
+                      />
+                    </div>
+                  </th>
+                  <th className="px-6 md:px-8 py-5 md:py-6 font-bold text-lg md:text-xl">
+                    <div className="flex items-center gap-3">
+                      <span>よくある生成AIチャットボット</span>
+                      <img
+                        src="/generalchatbot.PNG"
+                        alt="一般的なチャットボット"
+                        className="h-32 md:h-40 w-auto object-contain"
+                      />
+                    </div>
+                  </th>
                 </tr>
               </thead>
               <motion.tbody className="divide-y divide-border">
                 {comparisonRows.map((row, index) => (
                   <motion.tr
                     key={row.label}
+                    className="hover:bg-slate-50/50 transition-colors"
                     initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
                     viewport={{ once: true, margin: "-120px" }}
                   >
-                    <td className="px-6 py-4 font-semibold text-foreground">{row.label}</td>
-                    <td className="px-6 py-4">{row.ours}</td>
-                    <td className="px-6 py-4 text-foreground/60">{row.others}</td>
+                    <td className="px-6 md:px-8 py-5 md:py-6 font-bold text-foreground border-r-2 border-border w-1/6 whitespace-nowrap">{row.label}</td>
+                    <td className="px-6 md:px-8 py-5 md:py-6 border-r-2 border-border">
+                      {row.label === "信頼性" ? (
+                        <p className="leading-relaxed font-semibold text-foreground">
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">推測ゼロ</span>
+                          <span className="text-foreground">。「分からない」が成長に繋がる</span>
+                        </p>
+                      ) : row.label === "スピード" ? (
+                        <p className="leading-relaxed font-semibold text-foreground">
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">1分</span>
+                          <span className="text-foreground">で情報の</span>
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">追加や編集</span>
+                          <span className="text-foreground">が可能</span>
+                        </p>
+                      ) : row.label === "使いやすさ" ? (
+                        <p className="leading-relaxed font-semibold text-foreground">
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">Webアプリ</span>
+                          <span className="text-foreground">だけで完結。</span>
+                          <br />
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">ノーコード</span>
+                          <span className="text-foreground">で誰でも簡単。</span>
+                        </p>
+                      ) : row.label === "柔軟性" ? (
+                        <p className="leading-relaxed font-semibold text-foreground">
+                          <span className="text-foreground">あらゆる</span>
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">ワークスペース</span>
+                          <span className="text-foreground">・</span>
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">公式ライン</span>
+                          <span className="text-foreground">・</span>
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">WEBページ</span>
+                          <span className="text-foreground">埋め込みにも対応</span>
+                        </p>
+                      ) : row.label === "コスト" ? (
+                        <p className="leading-relaxed font-semibold text-foreground">
+                          <span className="text-foreground">エンジニア不要で業界最安級</span>
+                          <br />
+                          <span className="text-foreground">月額</span>
+                          <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">19,800円</span>
+                          <span className="text-foreground">〜</span>
+                        </p>
+                      ) : (
+                        <p className="leading-relaxed font-semibold text-foreground whitespace-pre-line">{row.ours.description}</p>
+                      )}
+                    </td>
+                    <td className="px-6 md:px-8 py-5 md:py-6">
+                      <p className="leading-relaxed text-foreground/70 whitespace-pre-line">{row.others.description}</p>
+                    </td>
                   </motion.tr>
                 ))}
               </motion.tbody>
@@ -1438,18 +1336,283 @@ export default function ServicesChatbot() {
         </div>
       </section>
 
+      {/* Security & Pricing */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
+        <div className="container">
+          <div className="grid gap-12 lg:grid-cols-2 items-start">
+            {/* Security */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                安心のセキュリティ体制
+              </h2>
+              <p className="text-base text-white/80 mb-8">
+                情報が重要な大学・自治体でも安心して使えるよう、セキュリティポリシーと運用体制を整備しています。
+              </p>
+
+              <div className="space-y-6">
+                <div className="rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-blue-50 to-cyan-50 p-6">
+                  <div className="flex items-start gap-4 mb-3">
+                    <img src="/aws.PNG" alt="AWS" className="h-16 w-16 object-contain flex-shrink-0" />
+                    <div className="flex-1">
+                      <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+                        <span className="bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">AWS</span>で厳格管理
+                      </h3>
+                      <p className="text-sm text-foreground/70">
+                        日本リージョン優先のAWS基盤で運用。通信はTLSで暗号化し、保存時も暗号化を徹底しています。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-blue-50 to-cyan-50 p-6">
+                  <div className="flex items-start gap-4 mb-3">
+                    <img src="/securitysafe.PNG" alt="セキュリティ" className="h-16 w-16 object-contain flex-shrink-0" />
+                    <div className="flex-1">
+                      <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
+                        <span className="bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">学習に使いません</span>
+                      </h3>
+                      <p className="text-sm text-foreground/70">
+                        お客様データを外部AIの学習には一切使用しません。推論目的のみで利用し、データの安全性を確保します。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Pricing */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                料金体系
+              </h2>
+              <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed">
+                <span className="text-3xl md:text-4xl font-extrabold text-cyan-300">月額19,800円</span>から選べる3つのプラン
+              </p>
+
+              <div className="space-y-4">
+                <div className="rounded-3xl border-4 border-primary bg-gradient-to-br from-white via-blue-50 to-cyan-50 p-8 shadow-lg">
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <p className="text-sm uppercase tracking-[0.4em] text-primary font-bold mb-2">STARTER PLAN</p>
+                      <h3 className="text-4xl md:text-5xl font-extrabold text-foreground">
+                        <span className="bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">¥19,800</span>
+                        <span className="text-xl font-normal text-foreground/70">/月</span>
+                      </h3>
+                    </div>
+                    <CheckCircle className="h-12 w-12 md:h-16 md:w-16 text-primary" />
+                  </div>
+                  <p className="text-base md:text-lg text-foreground font-medium leading-relaxed">
+                    小規模チーム向け。まずは試してみたい方に最適なプランです。
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">ご利用イメージ</h2>
+            <p className="mt-4 text-base text-foreground/70">
+              社内問い合わせとカスタマーサポート、両方のシーンでご活用いただけます
+            </p>
+          </motion.div>
+
+          <div className="grid gap-8 lg:grid-cols-2 max-w-6xl mx-auto">
+            {/* 社内問い合わせ */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl p-6 mb-6">
+                <h3 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+                  <MessageCircle className="h-6 w-6 text-primary" />
+                  社内問い合わせ
+                </h3>
+                <p className="text-sm text-foreground/70">従業員からの社内手続きや規程に関する質問に対応</p>
+              </div>
+
+              <div>
+                <div className="bg-white rounded-3xl p-6 shadow-md border-2 border-primary/20">
+                  <div className="space-y-6">
+                    {/* Q&A 1 */}
+                    <div className="space-y-4">
+                      {/* 質問 */}
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center text-sm font-bold">
+                          社員
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-base font-semibold text-foreground">有給休暇の申請方法を教えてください</p>
+                        </div>
+                      </div>
+
+                      {/* 回答 */}
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                          <Brain className="h-5 w-5 text-white" />
+                        </div>
+                        <div className="flex-1 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4">
+                          <p className="text-sm text-foreground leading-relaxed">
+                            有給休暇の申請は社内ポータルから行えます。<br />
+                            手順：ポータル → 勤怠管理 → 休暇申請 → 有給休暇を選択<br />
+                            承認は通常1営業日以内に完了します。
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 区切り線 */}
+                    <div className="border-t border-slate-200"></div>
+
+                    {/* Q&A 2 */}
+                    <div className="space-y-4">
+                      {/* 質問 */}
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center text-sm font-bold">
+                          社員
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-base font-semibold text-foreground">経費精算の締め日はいつですか？</p>
+                        </div>
+                      </div>
+
+                      {/* 回答 */}
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                          <Brain className="h-5 w-5 text-white" />
+                        </div>
+                        <div className="flex-1 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4">
+                          <p className="text-sm text-foreground leading-relaxed">
+                            経費精算の締め日は毎月末です。<br />
+                            月末までに申請された経費は、翌月15日に振り込まれます。
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* カスタマーサポート */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-6 mb-6">
+                <h3 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+                  <Globe className="h-6 w-6 text-purple-600" />
+                  カスタマーサポート
+                </h3>
+                <p className="text-sm text-foreground/70">顧客からの製品・サービスに関する質問に対応</p>
+              </div>
+
+              <div>
+                <div className="bg-white rounded-3xl p-6 shadow-md border-2 border-purple-300">
+                  <div className="space-y-6">
+                    {/* Q&A 1 */}
+                    <div className="space-y-4">
+                      {/* 質問 */}
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center text-sm font-bold">
+                          顧客
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-base font-semibold text-foreground">配送状況を確認したいのですが</p>
+                        </div>
+                      </div>
+
+                      {/* 回答 */}
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
+                          <Brain className="h-5 w-5 text-white" />
+                        </div>
+                        <div className="flex-1 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-4">
+                          <p className="text-sm text-foreground leading-relaxed">
+                            配送状況は注文番号で確認できます。<br />
+                            マイページ → 注文履歴 → 配送状況を確認<br />
+                            お急ぎの場合は追跡番号をお伝えください。
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 区切り線 */}
+                    <div className="border-t border-purple-200"></div>
+
+                    {/* Q&A 2 */}
+                    <div className="space-y-4">
+                      {/* 質問 */}
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center text-sm font-bold">
+                          顧客
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-base font-semibold text-foreground">返品の手続き方法を教えてください</p>
+                        </div>
+                      </div>
+
+                      {/* 回答 */}
+                      <div className="flex gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
+                          <Brain className="h-5 w-5 text-white" />
+                        </div>
+                        <div className="flex-1 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-4">
+                          <p className="text-sm text-foreground leading-relaxed">
+                            返品は商品到着後14日以内に受付可能です。<br />
+                            マイページから返品申請を行い、返送先住所をご確認ください。
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container">
           <motion.div
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">よくあるご質問</h2>
+            <p className="mt-4 text-base text-foreground/70">
+              右下のチャットボットでもお気軽にご相談いただけます
+            </p>
           </motion.div>
-          <div className="mt-8 space-y-4">
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
               <motion.details
                 key={faq.question}

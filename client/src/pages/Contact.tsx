@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Send, Menu, X } from "lucide-react";
+import { Mail, Phone, Send, Menu, X } from "lucide-react";
 import { Link } from "wouter";
 import { useState } from "react";
 
@@ -130,18 +130,6 @@ export default function Contact() {
             {/* Contact Info Cards */}
             <div className="md:col-span-1">
               <div className="space-y-8">
-                {/* Address */}
-                <div className="flex gap-4">
-                  <MapPin className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-bold text-foreground mb-2">所在地</h3>
-                    <p className="text-foreground/70">
-                      愛知県名古屋市千種区猫洞通５<br />
-                      ドムス本山401
-                    </p>
-                  </div>
-                </div>
-
                 {/* Email */}
                 <div className="flex gap-4">
                   <Mail className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
