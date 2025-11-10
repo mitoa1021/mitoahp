@@ -257,7 +257,7 @@ const formInitialState = {
 };
 
 const heroStatImages = [
-  { src: "/95%25+.PNG", alt: "95%以上の正答率" },
+  { src: "/95percent-plus.PNG", alt: "95%以上の正答率" },
   { src: "/sokuji.PNG", alt: "即時の回答スピード" },
   { src: "/2~4weeks.PNG", alt: "導入期間は2〜4週間" },
   { src: "/getugaku.PNG", alt: "月額制 業界最安級" },
