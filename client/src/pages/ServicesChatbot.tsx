@@ -160,7 +160,7 @@ const comparisonRows = [
       statValue: "<5%",
     },
     others: {
-      description: "AIが勝手に推測して回答。\n間違った情報を提供するリスクあり。",
+      description: "AIが勝手に推測して回答。間違った情報を提供するリスクあり。",
       statLabel: "推測回答率",
       statValue: "15%+",
     },
@@ -173,7 +173,7 @@ const comparisonRows = [
       statValue: "1営業日",
     },
     others: {
-      description: "エンジニアへの依頼が必要。\n改善までに数週間",
+      description: "エンジニアへの依頼が必要。改善までに数週間かかる。",
       statLabel: "改善リードタイム",
       statValue: "2〜4週間",
     },
@@ -186,7 +186,7 @@ const comparisonRows = [
       statValue: "3分",
     },
     others: {
-      description: "複雑な管理画面で迷子に。どの情報が最新か分からず、編集や承認に時間がかかります。",
+      description: "複雑な管理画面で迷子に。編集や承認に時間がかかる。",
       statLabel: "1回答の編集時間",
       statValue: "30分+",
     },
@@ -199,7 +199,7 @@ const comparisonRows = [
       statValue: "3チャネル標準",
     },
     others: {
-      description: "チャネルごとに別々のシナリオ作成が必要。増やすたびに管理工数が倍増し、更新漏れも発生。",
+      description: "チャネルごとに別々のシナリオ作成が必要。管理工数が倍増。",
       statLabel: "管理負荷",
       statValue: "チャネル数に比例",
     },
@@ -212,7 +212,7 @@ const comparisonRows = [
       statValue: "30万円〜",
     },
     others: {
-      description: "FAQやシナリオ数で課金。充実させようとすると、あっという間に予算オーバーに。\n月額15万円 ～ 50万円が相場",
+      description: "FAQ・シナリオ数で課金。充実させると予算オーバーに。月額15〜50万円が相場。",
       statLabel: "課金単位",
       statValue: "FAQ/シナリオ毎",
     },
@@ -1238,34 +1238,40 @@ export default function ServicesChatbot() {
             </p>
           </motion.div>
 
+          {/* Desktop version - Table */}
           <motion.div
-            className="mt-8 overflow-hidden rounded-3xl border border-border bg-background shadow-sm"
+            className="mt-8 overflow-hidden rounded-3xl border border-border bg-background shadow-sm hidden md:block"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
             viewport={{ once: true, margin: "-100px" }}
           >
             <table className="w-full text-left text-base md:text-lg text-foreground border-collapse">
+              <colgroup>
+                <col className="w-[12%]" />
+                <col className="w-[44%]" />
+                <col className="w-[44%]" />
+              </colgroup>
               <thead className="bg-gradient-to-r from-blue-50 to-cyan-50 text-foreground">
                 <tr>
-                  <th className="px-6 md:px-8 py-5 md:py-6 font-bold text-lg md:text-xl border-r-2 border-border w-1/6 whitespace-nowrap">観点</th>
-                  <th className="px-6 md:px-8 py-5 md:py-6 font-bold border-r-2 border-border">
-                    <div className="flex items-center gap-3">
-                      <span className="text-3xl md:text-4xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">MiToA</span>
+                  <th className="px-4 py-5 font-bold text-base border-r-2 border-border text-center align-middle">観点</th>
+                  <th className="px-6 py-5 font-bold border-r-2 border-border align-middle">
+                    <div className="flex flex-col items-center gap-2">
+                      <span className="text-2xl md:text-3xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">MiToA</span>
                       <img
                         src="/PC&iPhone.PNG"
                         alt="MiToA"
-                        className="h-32 md:h-40 w-auto object-contain"
+                        className="h-20 w-auto object-contain"
                       />
                     </div>
                   </th>
-                  <th className="px-6 md:px-8 py-5 md:py-6 font-bold text-lg md:text-xl">
-                    <div className="flex items-center gap-3">
-                      <span>よくある生成AIチャットボット</span>
+                  <th className="px-6 py-5 font-bold text-base align-middle">
+                    <div className="flex flex-col items-center gap-2">
+                      <span className="text-center">よくある生成AI<br/>チャットボット</span>
                       <img
                         src="/generalchatbot.PNG"
                         alt="一般的なチャットボット"
-                        className="h-32 md:h-40 w-auto object-contain"
+                        className="h-20 w-auto object-contain"
                       />
                     </div>
                   </th>
@@ -1281,8 +1287,8 @@ export default function ServicesChatbot() {
                     transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
                     viewport={{ once: true, margin: "-120px" }}
                   >
-                    <td className="px-6 md:px-8 py-5 md:py-6 font-bold text-foreground border-r-2 border-border w-1/6 whitespace-nowrap">{row.label}</td>
-                    <td className="px-6 md:px-8 py-5 md:py-6 border-r-2 border-border">
+                    <td className="px-4 py-5 font-bold text-foreground border-r-2 border-border text-center align-top text-sm">{row.label}</td>
+                    <td className="px-6 py-5 border-r-2 border-border align-top">
                       {row.label === "信頼性" ? (
                         <p className="leading-relaxed font-semibold text-foreground">
                           <span className="text-xl md:text-2xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">推測ゼロ</span>
@@ -1325,14 +1331,89 @@ export default function ServicesChatbot() {
                         <p className="leading-relaxed font-semibold text-foreground whitespace-pre-line">{row.ours.description}</p>
                       )}
                     </td>
-                    <td className="px-6 md:px-8 py-5 md:py-6">
-                      <p className="leading-relaxed text-foreground/70 whitespace-pre-line">{row.others.description}</p>
+                    <td className="px-6 py-5 align-top">
+                      <p className="leading-relaxed text-foreground/70 text-sm">{row.others.description}</p>
                     </td>
                   </motion.tr>
                 ))}
               </motion.tbody>
             </table>
           </motion.div>
+
+          {/* Mobile version - Cards */}
+          <div className="mt-8 space-y-6 md:hidden">
+            {comparisonRows.map((row, index) => (
+              <motion.div
+                key={row.label}
+                className="overflow-hidden rounded-2xl border border-border bg-background shadow-sm"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-50px" }}
+              >
+                {/* Header */}
+                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
+                  <h3 className="font-bold text-lg text-foreground">{row.label}</h3>
+                </div>
+
+                {/* MiToA */}
+                <div className="px-5 py-5 border-b-2 border-border">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-2xl font-bold bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">MiToA</span>
+                  </div>
+                  {row.label === "信頼性" ? (
+                    <p className="leading-relaxed font-semibold text-foreground">
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">推測ゼロ</span>
+                      <span className="text-foreground">。「分からない」が成長に繋がる</span>
+                    </p>
+                  ) : row.label === "スピード" ? (
+                    <p className="leading-relaxed font-semibold text-foreground">
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">1分</span>
+                      <span className="text-foreground">で情報の</span>
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">追加や編集</span>
+                      <span className="text-foreground">が可能</span>
+                    </p>
+                  ) : row.label === "使いやすさ" ? (
+                    <p className="leading-relaxed font-semibold text-foreground">
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">Webアプリ</span>
+                      <span className="text-foreground">だけで完結。</span>
+                      <br />
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">ノーコード</span>
+                      <span className="text-foreground">で誰でも簡単。</span>
+                    </p>
+                  ) : row.label === "柔軟性" ? (
+                    <p className="leading-relaxed font-semibold text-foreground">
+                      <span className="text-foreground">あらゆる</span>
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">ワークスペース</span>
+                      <span className="text-foreground">・</span>
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">公式ライン</span>
+                      <span className="text-foreground">・</span>
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">WEBページ</span>
+                      <span className="text-foreground">埋め込みにも対応</span>
+                    </p>
+                  ) : row.label === "コスト" ? (
+                    <p className="leading-relaxed font-semibold text-foreground">
+                      <span className="text-foreground">エンジニア不要で業界最安級</span>
+                      <br />
+                      <span className="text-foreground">月額</span>
+                      <span className="text-xl bg-gradient-to-r from-primary via-sky-500 to-cyan-400 bg-clip-text text-transparent">19,800円</span>
+                      <span className="text-foreground">〜</span>
+                    </p>
+                  ) : (
+                    <p className="leading-relaxed font-semibold text-foreground whitespace-pre-line">{row.ours.description}</p>
+                  )}
+                </div>
+
+                {/* Others */}
+                <div className="px-5 py-5 bg-slate-50/50">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-base font-bold text-foreground/80">よくある生成AIチャットボット</span>
+                  </div>
+                  <p className="leading-relaxed text-sm text-foreground/70 whitespace-pre-line">{row.others.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
