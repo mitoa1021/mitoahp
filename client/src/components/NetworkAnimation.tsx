@@ -31,13 +31,13 @@ export default function NetworkAnimation() {
     window.addEventListener('resize', setCanvasSize);
 
     // Create nodes
-    const nodeCount = 30;
+    const nodeCount = 40;
     const nodes: Node[] = [];
     const maxDistance = 200;
     const baseSpeed = 0.2;
 
-    // 75% of nodes on the right side (x > 40%), 25% on the left
-    const rightNodeCount = Math.floor(nodeCount * 0.75);
+    // 80% of nodes on the right side (x > 40%), 20% on the left
+    const rightNodeCount = Math.floor(nodeCount * 0.8);
 
     for (let i = 0; i < nodeCount; i++) {
       const isRightSide = i < rightNodeCount;
@@ -143,7 +143,7 @@ export default function NetworkAnimation() {
             const finalOpacity = distanceOpacity * depthOpacity;
 
             // Thicker lines for connections
-            const lineWidth = 1.5 + avgZ * 2.5;
+            const lineWidth = 2.5 + avgZ * 3.5;
 
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);

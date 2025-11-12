@@ -703,10 +703,10 @@ export default function ServicesChatbot() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
-                    Chatbotが<span className="text-yellow-500">"育つ"</span>仕組み<br />運用しながら賢くなる
+                    エンジニア不要で<br />Chatbotが<span className="text-yellow-500">"育つ"</span>仕組み
                   </h3>
                   <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
-                    届いた質問に答えるだけでChatbotが賢くなる仕組み。
+                    届いた質問に答えるだけで運用しながらChatbotが賢くなる仕組み。
                   </p>
                 </div>
               </div>
@@ -730,11 +730,8 @@ export default function ServicesChatbot() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
-                    エンジニア不要で<br /><span className="text-yellow-500">業界最安級価格</span>
+                    <span className="text-yellow-500">業界最安級価格</span><br />月額19,800円〜
                   </h3>
-                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
-                    自分たちで育てる仕組みだからこそ、導入後のエンジニアとの連携不要で時間・価格が抑えられる
-                  </p>
                 </div>
               </div>
             </motion.div>
@@ -816,11 +813,11 @@ export default function ServicesChatbot() {
       </section>
 
       {/* MiToA Solution & Core Highlights - Combined Section */}
-      <section className="py-8 md:py-12 bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 overflow-hidden">
+      <section className="py-8 md:py-12 bg-gradient-to-br from-blue-100 via-indigo-100 to-cyan-100 overflow-hidden">
         <div className="container">
           {/* White Card Container */}
           <motion.div
-            className="relative mx-auto w-full max-w-6xl rounded-3xl bg-white p-8 md:p-12 shadow-xl border border-blue-200/40"
+            className="relative mx-auto w-full max-w-6xl rounded-3xl bg-white p-8 md:p-12 shadow-2xl border-2 border-indigo-200/60"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
@@ -864,9 +861,9 @@ export default function ServicesChatbot() {
                     viewport={{ once: true, margin: "-120px" }}
                   >
                     <div
-                      className="h-full w-full rounded-[2.5rem] bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4 md:p-8 shadow-xl"
+                      className="h-full w-full rounded-[2.5rem] bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 p-4 md:p-8 shadow-xl"
                     >
-                      <div className="bg-white/95 backdrop-blur rounded-[2rem] p-4 md:p-6 h-full shadow-lg border border-blue-100/60 flex flex-col justify-between">
+                      <div className="bg-white/95 backdrop-blur rounded-[2rem] p-4 md:p-6 h-full shadow-lg border border-indigo-100/70 flex flex-col justify-between">
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -878,7 +875,7 @@ export default function ServicesChatbot() {
                         {index === 0 && (
                           <div className="mt-8 space-y-6">
                             <div className="grid gap-6 md:grid-cols-2">
-                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-blue-100/40">
+                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-indigo-100/50">
                                 <img
                                   src="/with-knowledge.png"
                                   alt="登録ナレッジ内での回答イメージ"
@@ -888,7 +885,7 @@ export default function ServicesChatbot() {
                                   知識がある場合は正しく答える
                                 </p>
                               </div>
-                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-blue-100/40">
+                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-indigo-100/50">
                                 <img
                                   src="/non-knowledge.png"
                                   alt="未登録ナレッジ時のフォールバックイメージ"
@@ -947,7 +944,7 @@ export default function ServicesChatbot() {
                               <img
                                 src="/value04.png"
                                 alt="ノーコードで即時更新のイメージ"
-                                className="max-h-full max-w-full object-contain rounded-2xl border border-blue-100/40 shadow-sm"
+                                className="max-h-full max-w-full object-contain rounded-2xl border border-indigo-100/50 shadow-sm"
                               />
                             </div>
                             <p className="text-center text-2xl md:text-3xl font-bold px-6 leading-relaxed">
