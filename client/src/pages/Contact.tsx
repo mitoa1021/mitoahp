@@ -11,11 +11,11 @@ import { useState } from "react";
 const GOOGLE_FORM_CONFIG = {
   formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSenzlLJqh4gRB03Q6QB70mq2KyJCcgwDD58GKC9Wiffbrz__A/formResponse',
   entryIds: {
-    name: 'entry.1561324777',      // お名前フィールドのEntry ID
-    email: 'entry.2019402489',     // メールアドレスフィールドのEntry ID
-    company: 'entry.1012941448',   // 会社名フィールドのEntry ID
-    subject: 'entry.1173601591',   // お問い合わせ内容フィールドのEntry ID
-    message: 'entry.1147612083',   // メッセージフィールドのEntry ID
+    name: 'entry.2102490600',      // お名前フィールドのEntry ID
+    company: 'entry.1732818920',   // 会社名フィールドのEntry ID
+    email: 'entry.535788086',      // メールアドレスフィールドのEntry ID
+    phone: 'entry.502257731',      // 電話番号フィールドのEntry ID
+    message: 'entry.1910158148',   // お問い合わせ内容フィールドのEntry ID
   }
 };
 
@@ -25,10 +25,9 @@ export default function Contact() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     company: "",
+    email: "",
     phone: "",
-    subject: "",
     message: "",
   });
 
@@ -49,9 +48,9 @@ export default function Contact() {
       // Create form data for Google Forms
       const googleFormData = new FormData();
       googleFormData.append(GOOGLE_FORM_CONFIG.entryIds.name, formData.name);
-      googleFormData.append(GOOGLE_FORM_CONFIG.entryIds.email, formData.email);
       googleFormData.append(GOOGLE_FORM_CONFIG.entryIds.company, formData.company);
-      googleFormData.append(GOOGLE_FORM_CONFIG.entryIds.subject, formData.subject);
+      googleFormData.append(GOOGLE_FORM_CONFIG.entryIds.email, formData.email);
+      googleFormData.append(GOOGLE_FORM_CONFIG.entryIds.phone, formData.phone || '');
       googleFormData.append(GOOGLE_FORM_CONFIG.entryIds.message, formData.message);
 
       // Submit to Google Forms
@@ -66,10 +65,9 @@ export default function Contact() {
       setSubmitSuccess(true);
       setFormData({
         name: "",
-        email: "",
         company: "",
+        email: "",
         phone: "",
-        subject: "",
         message: "",
       });
 

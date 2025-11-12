@@ -466,12 +466,12 @@ export default function ServicesChatbot() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b border-border bg-white/90 backdrop-blur">
         <div className="py-1 flex items-center justify-between pl-0 pr-4 md:pr-8">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2" onClick={() => window.scrollTo(0, 0)}>
             <img src="/logo.png" alt="MiToA" className="h-20 md:h-32 w-auto ml-4 md:ml-6" />
           </Link>
           <div className="hidden md:flex items-center gap-6 pr-2">
             <div className="flex items-center gap-4">
-              <Link href="/" className="text-foreground hover:text-primary transition-colors text-sm font-bold">
+              <Link href="/" className="text-foreground hover:text-primary transition-colors text-sm font-bold" onClick={() => window.scrollTo(0, 0)}>
                 ホーム
               </Link>
               <span className="text-foreground/30">|</span>
@@ -479,12 +479,12 @@ export default function ServicesChatbot() {
                 事業内容
               </Link>
               <span className="text-foreground/30">|</span>
-              <Link href="/contact" className="text-foreground hover:text-primary transition-colors text-sm font-bold">
+              <Link href="/contact" className="text-foreground hover:text-primary transition-colors text-sm font-bold" onClick={() => window.scrollTo(0, 0)}>
                 お問い合わせ
               </Link>
             </div>
             <div className="flex items-center gap-4">
-              <Link href="/contact">
+              <Link href="/contact" onClick={() => window.scrollTo(0, 0)}>
                 <Button
                   variant="outline"
                   size="lg"
@@ -493,7 +493,7 @@ export default function ServicesChatbot() {
                   無料で相談する
                 </Button>
               </Link>
-              <Link href="/contact">
+              <Link href="/contact" onClick={() => window.scrollTo(0, 0)}>
                 <Button
                   size="lg"
                   className="relative overflow-hidden rounded-md bg-primary px-7 py-3 text-sm md:text-base font-semibold text-white shadow-[0_0_24px_rgba(59,130,246,0.55)] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_38px_rgba(59,130,246,0.7)] hover:-translate-y-0.5"
@@ -514,7 +514,7 @@ export default function ServicesChatbot() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white/95 backdrop-blur border-t border-border">
             <div className="flex flex-col py-4">
-              <Link href="/" className="text-foreground hover:bg-slate-100 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/" className="text-foreground hover:bg-slate-100 px-6 py-3 text-sm font-bold transition-colors" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }}>
                 ホーム
               </Link>
               <div className="border-t border-border mx-6" />
@@ -522,7 +522,7 @@ export default function ServicesChatbot() {
                 事業内容
               </Link>
               <div className="border-t border-border mx-6" />
-              <Link href="/contact" className="text-foreground hover:bg-slate-100 px-6 py-3 text-sm font-bold transition-colors" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/contact" className="text-foreground hover:bg-slate-100 px-6 py-3 text-sm font-bold transition-colors" onClick={() => { setMobileMenuOpen(false); window.scrollTo(0, 0); }}>
                 お問い合わせ
               </Link>
             </div>
@@ -702,10 +702,10 @@ export default function ServicesChatbot() {
                   />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl md:text-3xl font-extrabold text-foreground leading-tight min-h-[120px]">
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-foreground mb-4 leading-tight">
                     Chatbotが<span className="text-yellow-500">"育つ"</span>仕組み<br />運用しながら賢くなる
                   </h3>
-                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed mt-4">
+                  <p className="text-base md:text-lg text-foreground/70 leading-relaxed">
                     届いた質問に答えるだけでChatbotが賢くなる仕組み。
                   </p>
                 </div>
@@ -721,11 +721,11 @@ export default function ServicesChatbot() {
               viewport={{ once: true, margin: "-50px" }}
             >
               <div className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                <div className="mb-4 flex justify-center items-center min-h-[220px]">
+                <div className="mb-4 flex justify-center items-center min-h-[220px] overflow-hidden">
                   <img
                     src="/tuyomi2.PNG"
                     alt="低価格で導入"
-                    className="w-full max-w-[200px] object-contain"
+                    className="w-full max-w-[250px] h-[220px] object-cover"
                   />
                 </div>
                 <div className="flex-1">
@@ -748,11 +748,11 @@ export default function ServicesChatbot() {
               viewport={{ once: true, margin: "-50px" }}
             >
               <div className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                <div className="mb-4 flex justify-center items-center min-h-[220px]">
+                <div className="mb-2 flex justify-center items-center min-h-[220px]">
                   <img
                     src="/tuyomi4.PNG"
                     alt="データ処理技術"
-                    className="w-full max-w-[200px] object-contain"
+                    className="w-full max-w-[280px] object-contain"
                   />
                 </div>
                 <div className="flex-1">
@@ -816,11 +816,11 @@ export default function ServicesChatbot() {
       </section>
 
       {/* MiToA Solution & Core Highlights - Combined Section */}
-      <section className="py-8 md:py-12 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 overflow-hidden">
+      <section className="py-8 md:py-12 bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 overflow-hidden">
         <div className="container">
           {/* White Card Container */}
           <motion.div
-            className="relative mx-auto w-full max-w-6xl rounded-3xl bg-white p-8 md:p-12 shadow-2xl border-4 border-blue-200"
+            className="relative mx-auto w-full max-w-6xl rounded-3xl bg-white p-8 md:p-12 shadow-xl border border-blue-200/40"
             initial={{ opacity: 0, y: 60 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
@@ -864,9 +864,9 @@ export default function ServicesChatbot() {
                     viewport={{ once: true, margin: "-120px" }}
                   >
                     <div
-                      className="h-full w-full rounded-[2.5rem] bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 p-4 md:p-8 shadow-xl"
+                      className="h-full w-full rounded-[2.5rem] bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4 md:p-8 shadow-xl"
                     >
-                      <div className="bg-white/95 backdrop-blur rounded-[2rem] p-4 md:p-6 h-full shadow-lg border-2 border-blue-200/50 flex flex-col justify-between">
+                      <div className="bg-white/95 backdrop-blur rounded-[2rem] p-4 md:p-6 h-full shadow-lg border border-blue-100/60 flex flex-col justify-between">
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -878,7 +878,7 @@ export default function ServicesChatbot() {
                         {index === 0 && (
                           <div className="mt-8 space-y-6">
                             <div className="grid gap-6 md:grid-cols-2">
-                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-white/60">
+                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-blue-100/40">
                                 <img
                                   src="/with-knowledge.png"
                                   alt="登録ナレッジ内での回答イメージ"
@@ -888,7 +888,7 @@ export default function ServicesChatbot() {
                                   知識がある場合は正しく答える
                                 </p>
                               </div>
-                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-white/60">
+                              <div className="rounded-2xl bg-white p-4 shadow-sm border border-blue-100/40">
                                 <img
                                   src="/non-knowledge.png"
                                   alt="未登録ナレッジ時のフォールバックイメージ"
@@ -947,7 +947,7 @@ export default function ServicesChatbot() {
                               <img
                                 src="/value04.png"
                                 alt="ノーコードで即時更新のイメージ"
-                                className="max-h-full max-w-full object-contain rounded-2xl border border-white/60 shadow-sm"
+                                className="max-h-full max-w-full object-contain rounded-2xl border border-blue-100/40 shadow-sm"
                               />
                             </div>
                             <p className="text-center text-2xl md:text-3xl font-bold px-6 leading-relaxed">
@@ -1332,7 +1332,7 @@ export default function ServicesChatbot() {
                       )}
                     </td>
                     <td className="px-6 py-5 align-top">
-                      <p className="leading-relaxed text-foreground/70 text-sm">{row.others.description}</p>
+                      <p className="leading-relaxed text-foreground/70 font-semibold">{row.others.description}</p>
                     </td>
                   </motion.tr>
                 ))}
@@ -1407,9 +1407,9 @@ export default function ServicesChatbot() {
                 {/* Others */}
                 <div className="px-5 py-5 bg-slate-50/50">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="text-base font-bold text-foreground/80">よくある生成AIチャットボット</span>
+                    <span className="text-2xl font-bold text-foreground/80">よくある生成AIチャットボット</span>
                   </div>
-                  <p className="leading-relaxed text-sm text-foreground/70 whitespace-pre-line">{row.others.description}</p>
+                  <p className="leading-relaxed font-semibold text-foreground/70 whitespace-pre-line">{row.others.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -1714,134 +1714,57 @@ export default function ServicesChatbot() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 md:py-24 bg-neutral-950 text-white">
+      <section className="py-20 md:py-32 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white overflow-hidden">
         <div className="container">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
             <motion.div
+              className="flex-1 max-w-2xl"
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                3分デモ or 導入相談
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                AI導入の<br />「はじめの一歩」を<br />ご一緒に。
               </h2>
-              <p className="mt-4 text-base text-white/70">
-                フォーム送信後に自動返信で「ヒアリング → 70%モデル」までのステップをご案内します。
-                組織に合わせた導入スケジュールもご提案可能です。
+              <p className="mt-6 text-lg md:text-xl text-white/80 leading-relaxed">
+                MIToAまでお気軽にご相談ください。
               </p>
-              <ul className="mt-6 space-y-3 text-sm text-white/70">
-                {[
-                  "組織種別・チャネル・資料点数などを入力いただくだけで相談可能",
-                  "ヒアリング内容をもとに、初回モデルを最短1週間でご提出",
-                ].map((item, index) => (
-                  <motion.li
-                    key={item}
-                    className="flex items-start gap-3"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 + index * 0.05 }}
-                    viewport={{ once: true, margin: "-120px" }}
-                  >
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-primary" />
-                    <span>{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
             </motion.div>
-            <motion.div
-              className="rounded-3xl border border-white/10 bg-white/5 p-6"
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-semibold text-white/80 mb-2">
-                    組織種別 <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    name="organizationType"
-                    value={formData.organizationType}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-lg border border-white/20 bg-neutral-900 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    <option value="">選択してください</option>
-                    <option value="university">大学・短大</option>
-                    <option value="government">自治体</option>
-                    <option value="hospital">病院・医療機関</option>
-                    <option value="enterprise">企業（民間）</option>
-                    <option value="other">その他</option>
-                  </select>
+
+            <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-8">
+              <motion.a
+                href="/contact"
+                className="group relative w-64 h-64 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 transition-all duration-300 flex flex-col items-center justify-center text-center shadow-2xl hover:shadow-orange-500/50 hover:scale-105"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                viewport={{ once: true, margin: "-100px" }}
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                <span className="text-sm font-medium mb-2">お問い合わせ</span>
+                <span className="text-3xl md:text-4xl font-bold mb-4">Contact</span>
+                <div className="w-12 h-12 rounded-full bg-black/20 flex items-center justify-center">
+                  <ArrowRight className="w-6 h-6" />
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-white/80 mb-2">部署名・チーム名</label>
-                  <input
-                    type="text"
-                    name="department"
-                    value={formData.department}
-                    onChange={handleChange}
-                    placeholder="例）教務課、DX推進室"
-                    className="w-full rounded-lg border border-white/20 bg-neutral-900 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
+              </motion.a>
+
+              <motion.a
+                href="/chatbot-consultation"
+                className="group relative w-64 h-64 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 transition-all duration-300 flex flex-col items-center justify-center text-center shadow-2xl hover:shadow-blue-500/50 hover:scale-105"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+                viewport={{ once: true, margin: "-100px" }}
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                <span className="text-sm font-medium mb-2">チャットボット導入相談</span>
+                <span className="text-2xl md:text-3xl font-bold mb-4 leading-tight px-4">Chatbot<br />Consultation</span>
+                <div className="w-12 h-12 rounded-full bg-black/20 flex items-center justify-center">
+                  <ArrowRight className="w-6 h-6" />
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-white/80 mb-2">
-                    想定チャネル <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="channels"
-                    value={formData.channels}
-                    onChange={handleChange}
-                    required
-                    placeholder="例）Slack、LINE公式、Webサイト"
-                    className="w-full rounded-lg border border-white/20 bg-neutral-900 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-white/80 mb-2">
-                    資料点数 <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="contentVolume"
-                    value={formData.contentVolume}
-                    onChange={handleChange}
-                    required
-                    placeholder="例）FAQ 300件、PDF 120件など"
-                    className="w-full rounded-lg border border-white/20 bg-neutral-900 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-white/80 mb-2">希望開始時期</label>
-                  <input
-                    type="text"
-                    name="startTiming"
-                    value={formData.startTiming}
-                    onChange={handleChange}
-                    placeholder="例）2025年4月から"
-                    className="w-full rounded-lg border border-white/20 bg-neutral-900 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-white/80 mb-2">メッセージ</label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={4}
-                    placeholder="お問い合わせ内容や現状の課題をご記入ください。"
-                    className="w-full rounded-lg border border-white/20 bg-neutral-900 px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-                <Button type="submit" className="w-full gap-2">
-                  送信する <ArrowRight className="h-4 w-4" />
-                </Button>
-              </form>
-            </motion.div>
+              </motion.a>
+            </div>
           </div>
         </div>
       </section>
@@ -1873,12 +1796,12 @@ export default function ServicesChatbot() {
               <h4 className="text-sm font-semibold uppercase tracking-widest text-white/60">会社情報</h4>
               <ul className="space-y-3 text-sm text-white/70">
                 <li>
-                  <Link href="/" className="transition-colors hover:text-primary">
+                  <Link href="/" className="transition-colors hover:text-primary" onClick={() => window.scrollTo(0, 0)}>
                     ホーム
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="transition-colors hover:text-primary">
+                  <Link href="/contact" className="transition-colors hover:text-primary" onClick={() => window.scrollTo(0, 0)}>
                     お問い合わせ
                   </Link>
                 </li>

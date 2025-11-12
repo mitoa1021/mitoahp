@@ -4,59 +4,13 @@ import { ArrowRight, Sparkles, Clock, Settings, Zap, TrendingUp, Users, Menu, X 
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import NetworkAnimation from "@/components/NetworkAnimation";
 
 export default function Home() {
   useDocumentTitle();
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const directionRef = useRef(1); // 1 for forward, -1 for backward
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const speed = 0.75;
-    const frameTime = 1000 / 30; // 30 fps for smoother performance
-    let intervalId: NodeJS.Timeout;
-
-    const updateVideo = () => {
-      if (!video) return;
-
-      // Calculate time change per frame
-      const timeChange = (frameTime / 1000) * speed * directionRef.current;
-      let newTime = video.currentTime + timeChange;
-
-      // Check boundaries and reverse direction
-      if (directionRef.current === 1 && newTime >= video.duration - 0.1) {
-        newTime = video.duration - 0.1;
-        directionRef.current = -1;
-      } else if (directionRef.current === -1 && newTime <= 0.1) {
-        newTime = 0.1;
-        directionRef.current = 1;
-      }
-
-      video.currentTime = newTime;
-    };
-
-    // Wait for video metadata to load
-    const handleLoadedMetadata = () => {
-      video.pause();
-      intervalId = setInterval(updateVideo, frameTime);
-    };
-
-    if (video.readyState >= 1) {
-      handleLoadedMetadata();
-    } else {
-      video.addEventListener('loadedmetadata', handleLoadedMetadata);
-    }
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-    };
-  }, []);
 
   // Handle scroll for card indicators
   useEffect(() => {
@@ -132,18 +86,11 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-screen flex items-center">
-        {/* Background Video */}
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: 'center center' }}
-        >
-          <source src="/background-animation.mp4" type="video/mp4" />
-        </video>
+        {/* Network Animation Background */}
+        <NetworkAnimation />
+
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/20" />
         <div className="container relative z-10 py-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="flex flex-col justify-center">
@@ -201,7 +148,7 @@ export default function Home() {
                 <p className="text-white text-sm font-bold mb-4">OUR FLAGSHIP PRODUCT</p>
                 <div className="mb-6 p-6 bg-zinc-800 rounded-xl border-l-4 border-white">
                   <p className="text-2xl md:text-3xl font-extrabold text-white leading-tight" style={{ fontFamily: "'Zen Kaku Gothic New', 'Inter', sans-serif" }}>
-                    自動で賢くなるチャットボット
+                    自動で賢くなるAIチャットボット
                   </p>
                   <p className="text-xl md:text-2xl font-medium text-gray-300 mt-2" style={{ fontFamily: "'Zen Kaku Gothic New', 'Inter', sans-serif" }}>
                     MiToA
@@ -250,7 +197,7 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: 0.9 }}
                 viewport={{ once: true }}
               >
-                <Link href="/contact">
+                <Link href="/contact" onClick={() => window.scrollTo(0, 0)}>
                   <Button
                     size="lg"
                     className="gap-2 bg-transparent text-white hover:bg-white hover:text-black border border-white transition-all duration-300 font-bold shadow-lg hover:shadow-2xl"
